@@ -11,15 +11,44 @@ public class PomProject {
     private String groupId;
     private String version;
 
+    public ParentProject getParent() {
+        return parent;
+    }
+
+    public void setParent(ParentProject parent) {
+        this.parent = parent;
+    }
+
+    private ParentProject parent;
+
     public Dependency toDependency() {
-        String license = null;
+        inheritFromParent();
+        if (this.groupId == null || this.artifactId == null || this.version == null) {
+            return null;
+        }
+        String license = "";
+        String group = this.groupId;
+        String artifact = this.artifactId;
+        String name = group + ":" + artifact;
+
+        // todo: how to use all licenses?
         if (this.licenses != null && this.licenses.size() > 0) {
             license = this.licenses.get(0).getName();
         }
+
         return new Dependency(
-            this.groupId + ":" + this.artifactId,
+            name,
             this.version,
             license);
+    }
+
+    private void inheritFromParent() {
+        if (groupId == null && parent.getGroupId() != null) {
+            groupId = parent.getGroupId();
+        }
+        if (version == null && parent.getVersion() != null) {
+            version = parent.getVersion();
+        }
     }
 
     public List<PomLicense> getLicenses() {
@@ -54,12 +83,6 @@ public class PomProject {
         this.version = version;
     }
 
-    @Override
-    public String toString() {
-        return "PomProject{" +
-            "licenses=" + licenses +
-            '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -74,4 +97,13 @@ public class PomProject {
         return Objects.hash(licenses);
     }
 
+    @Override
+    public String toString() {
+        return "PomProject{" +
+            "licenses=" + licenses +
+            ", artifactId='" + artifactId + '\'' +
+            ", groupId='" + groupId + '\'' +
+            ", version='" + version + '\'' +
+            '}';
+    }
 }

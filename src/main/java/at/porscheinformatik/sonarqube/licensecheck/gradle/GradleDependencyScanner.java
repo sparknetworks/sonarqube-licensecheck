@@ -7,6 +7,10 @@ import at.porscheinformatik.sonarqube.licensecheck.maven.LicenseFinder;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependency;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
 import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.model.License;
 import org.slf4j.Logger;
@@ -15,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -49,6 +54,7 @@ public class GradleDependencyScanner implements Scanner {
         }
     }
 
+
     private List<Dependency> resolveDependenciesWithLicenses() throws Exception {
 
         GradlePomResolver gradlePomResolver = new GradlePomResolver(projectRoot);
@@ -56,6 +62,7 @@ public class GradleDependencyScanner implements Scanner {
 
         List<Dependency> dependencies = poms.stream()
             .map(PomProject::toDependency)
+            .filter(Objects::nonNull)
             .collect(Collectors.toList());
 
         // todo: remove eventually

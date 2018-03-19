@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 class GradlePomResolver {
@@ -37,11 +38,13 @@ class GradlePomResolver {
 
         return pomFiles.stream()
             .map(File::getAbsolutePath)
-            .map(this::mapToPom)
+            .map(this::parsePom)
+            .filter(Objects::nonNull)
+            //.filter(pomProject -> pomProject.getLicenses() != null)
             .collect(Collectors.toList());
     }
 
-    private PomProject mapToPom(String pomPath) {
+    private PomProject parsePom(String pomPath) {
         File file = new File(pomPath);
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -57,7 +60,8 @@ class GradlePomResolver {
 
     private String createInitScript() {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("gradle/pom.gradle");
-        File file = new File(projectRoot, "pom.gradle");
+        File buildDir = new File(projectRoot, "build");
+        File file = new File(buildDir, "pom.gradle");
         try {
             FileUtils.copyInputStreamToFile(inputStream, file);
             return file.getAbsolutePath();
