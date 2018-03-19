@@ -1,6 +1,5 @@
 package at.porscheinformatik.sonarqube.licensecheck.gradle;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 class GradleInvoker {
 
@@ -31,8 +31,10 @@ class GradleInvoker {
     }
 
     String invoke(String... gradleCommands) throws IOException, GradleInvokerException {
-        String[] commands = new String[]{GRADLE_EXEC};
-        commands = (String[]) ArrayUtils.addAll(commands, gradleCommands);
+        String[] commands = Stream
+            .of(new String[]{GRADLE_EXEC}, gradleCommands)
+            .flatMap(Stream::of)
+            .toArray(String[]::new);
 
         ProcessBuilder processBuilder = new ProcessBuilder();
         Process process = processBuilder.command(commands).directory(projectRoot).start();
