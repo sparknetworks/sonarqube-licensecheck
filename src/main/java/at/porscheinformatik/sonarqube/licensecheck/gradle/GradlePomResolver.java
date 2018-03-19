@@ -7,6 +7,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ class GradlePomResolver {
     List<PomProject> resolvePoms() throws Exception {
         GradleInvoker gradleInvoker = new GradleInvoker(projectRoot.getAbsolutePath());
 
-        System.out.println(gradleInvoker.invoke("copyPoms", "-I", getInitScript()));
+        gradleInvoker.invoke("copyPoms", "-I", createInitScript());
 
         String relativePoms = "build/poms";
         File targetDir = new File(projectRoot, relativePoms);
@@ -54,7 +55,15 @@ class GradlePomResolver {
         return null;
     }
 
-    private String getInitScript() {
-        return this.getClass().getClassLoader().getResource("gradle/pom.gradle").getFile();
+    private String createInitScript() {
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("gradle/pom.gradle");
+        File file = new File(projectRoot, "pom.gradle");
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+            return file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
