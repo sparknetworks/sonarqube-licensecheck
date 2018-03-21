@@ -75,7 +75,6 @@ public class GradleDependencyScanner implements Scanner {
             .collect(Collectors.toList());
     }
 
-
     // todo: reuse methods from MavenDependencyScanner..
     private Function<Dependency, Dependency> loadLicenseFromPom(Map<Pattern, String> licenseMap, String userSettings,
                                                                 String globalSettings) {
@@ -124,5 +123,4 @@ public class GradleDependencyScanner implements Scanner {
         }
         return dependency;
     }
-
 }

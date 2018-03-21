@@ -21,7 +21,9 @@ public class GradleDependencyScannerTest {
 
         File buildGradleSrc = new File(this.getClass().getClassLoader().getResource("gradle/build.gradle").getFile());
         File buildGradleTrg = new File(projectRoot, "build.gradle");
-        FileUtils.copyFile(buildGradleSrc, buildGradleTrg);
+        if (!buildGradleTrg.exists()) {
+            FileUtils.copyFile(buildGradleSrc, buildGradleTrg);
+        }
     }
 
 
