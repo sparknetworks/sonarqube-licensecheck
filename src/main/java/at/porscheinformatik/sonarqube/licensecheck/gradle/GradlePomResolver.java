@@ -1,11 +1,12 @@
 package at.porscheinformatik.sonarqube.licensecheck.gradle;
 
-import at.porscheinformatik.sonarqube.licensecheck.gradle.model.PomProject;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -21,7 +22,7 @@ class GradlePomResolver {
         this.projectRoot = projectRoot;
     }
 
-    List<PomProject> resolvePomsOfAllDependencies() throws Exception {
+    List<Model> resolvePomsOfAllDependencies() throws Exception {
         File targetDir = resolvePomsAsFiles();
 
         return parsePomsInDir(targetDir);
@@ -38,7 +39,7 @@ class GradlePomResolver {
         return targetDir;
     }
 
-    private List<PomProject> parsePomsInDir(File targetDir) {
+    private List<Model> parsePomsInDir(File targetDir) {
         Collection<File> pomFiles = FileUtils.listFiles(targetDir, new String[]{"pom"}, false);
 
         return pomFiles.stream()
@@ -49,15 +50,12 @@ class GradlePomResolver {
             .collect(Collectors.toList());
     }
 
-    private PomProject parsePom(String pomPath) {
-        File file = new File(pomPath);
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        String xml = null;
+    private Model parsePom(String pomPath) {
         try {
-            xml = FileUtils.readFileToString(file);
-            return xmlMapper.readValue(xml, PomProject.class);
-        } catch (IOException e) {
+            File file = new File(pomPath);
+            MavenXpp3Reader pomReader = new MavenXpp3Reader();
+            return pomReader.read(new FileInputStream(file));
+        } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
         }
         return null;

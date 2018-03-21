@@ -1,7 +1,6 @@
 package at.porscheinformatik.sonarqube.licensecheck.gradle;
 
 import at.porscheinformatik.sonarqube.licensecheck.Dependency;
-import at.porscheinformatik.sonarqube.licensecheck.gradle.model.PomProject;
 import at.porscheinformatik.sonarqube.licensecheck.interfaces.Scanner;
 import at.porscheinformatik.sonarqube.licensecheck.maven.LicenseFinder;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependency;
@@ -9,6 +8,7 @@ import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependen
 import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.model.License;
+import org.apache.maven.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +54,7 @@ public class GradleDependencyScanner implements Scanner {
     private List<Dependency> resolveDependenciesWithLicenses() throws Exception {
         GradlePomResolver gradlePomResolver = new GradlePomResolver(projectRoot);
 
-        List<PomProject> poms = gradlePomResolver.resolvePomsOfAllDependencies();
+        List<Model> poms = gradlePomResolver.resolvePomsOfAllDependencies();
         List<Dependency> dependencies = pomsToDependencies(poms);
 
         // todo: remove eventually
@@ -68,12 +68,43 @@ public class GradleDependencyScanner implements Scanner {
             .collect(Collectors.toList());
     }
 
-    private List<Dependency> pomsToDependencies(List<PomProject> poms) {
+    private List<Dependency> pomsToDependencies(List<Model> poms) {
         return poms.stream()
-            .map(PomProject::toDependency)
+            .map(this::pomToDependency)
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
+
+    private Dependency pomToDependency(Model model) {
+        inheritFromParent(model);
+        if (model.getGroupId() == null || model.getArtifactId() == null || model.getVersion() == null) {
+            return null;
+        }
+        String license = "";
+        String group = model.getGroupId();
+        String artifact = model.getArtifactId();
+        String name = group + ":" + artifact;
+
+        // todo: how to use all licenses?
+        if (model.getLicenses() != null && model.getLicenses().size() > 0) {
+            license = model.getLicenses().get(0).getName();
+        }
+
+        return new Dependency(
+            name,
+            model.getVersion(),
+            license);
+    }
+
+    private void inheritFromParent(Model pom) {
+        if (pom.getGroupId() == null && pom.getParent().getGroupId() != null) {
+            pom.setGroupId(pom.getParent().getGroupId());
+        }
+        if (pom.getVersion() == null && pom.getParent().getVersion() != null) {
+            pom.setVersion(pom.getParent().getVersion());
+        }
+    }
+
 
     // todo: reuse methods from MavenDependencyScanner..
     private Function<Dependency, Dependency> loadLicenseFromPom(Map<Pattern, String> licenseMap, String userSettings,

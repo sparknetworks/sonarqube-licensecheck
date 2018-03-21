@@ -1,8 +1,8 @@
 package at.porscheinformatik.sonarqube.licensecheck.gradle;
 
-import at.porscheinformatik.sonarqube.licensecheck.gradle.model.PomLicense;
-import at.porscheinformatik.sonarqube.licensecheck.gradle.model.PomProject;
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.model.License;
+import org.apache.maven.model.Model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,18 +33,21 @@ public class GradlePomResolverTest {
     public void resolvePoms() throws Exception {
         GradlePomResolver gradlePomResolver = new GradlePomResolver(projectRoot);
 
-        List<PomProject> poms = gradlePomResolver.resolvePomsOfAllDependencies();
+        List<Model> poms = gradlePomResolver.resolvePomsOfAllDependencies();
 
-        PomProject pomProject = new PomProject();
-        pomProject.setArtifactId("spock-core");
-        pomProject.setGroupId("org.spockframework");
-        pomProject.setVersion("1.1-groovy-2.4");
-        PomLicense pomLicense = new PomLicense();
+        Model pom = new Model();
+        pom.setArtifactId("spock-core");
+        pom.setGroupId("org.spockframework");
+        pom.setVersion("1.1-groovy-2.4");
+        License pomLicense = new License();
         pomLicense.setName("The Apache Software License, Version 2.0");
         pomLicense.setUrl("http://www.apache.org/licenses/LICENSE-2.0.txt");
         pomLicense.setDistribution("repo");
-        pomProject.setLicenses(Collections.singletonList(pomLicense));
+        pom.setLicenses(Collections.singletonList(pomLicense));
 
-        Assert.assertTrue(poms.contains(pomProject));
+        Assert.assertNotNull(poms.stream().filter(p -> {
+            return p.getArtifactId().equals("spock-core")
+                && p.getLicenses().get(0).getName().equals("The Apache Software License, Version 2.0");
+        }).findFirst().orElse(null));
     }
 }
