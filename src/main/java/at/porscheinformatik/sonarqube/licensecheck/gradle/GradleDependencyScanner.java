@@ -7,10 +7,6 @@ import at.porscheinformatik.sonarqube.licensecheck.maven.LicenseFinder;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependency;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
 import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.model.License;
 import org.slf4j.Logger;
@@ -56,14 +52,10 @@ public class GradleDependencyScanner implements Scanner {
 
 
     private List<Dependency> resolveDependenciesWithLicenses() throws Exception {
-
         GradlePomResolver gradlePomResolver = new GradlePomResolver(projectRoot);
-        List<PomProject> poms = gradlePomResolver.resolvePoms();
 
-        List<Dependency> dependencies = poms.stream()
-            .map(PomProject::toDependency)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+        List<PomProject> poms = gradlePomResolver.resolvePomsOfAllDependencies();
+        List<Dependency> dependencies = pomsToDependencies(poms);
 
         // todo: remove eventually
         if (mavenDependencyService == null || mavenLicenseService == null) {
@@ -73,6 +65,13 @@ public class GradleDependencyScanner implements Scanner {
         return dependencies.stream()
             .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), null, null))
             .map(this::mapMavenDependencyToLicense)
+            .collect(Collectors.toList());
+    }
+
+    private List<Dependency> pomsToDependencies(List<PomProject> poms) {
+        return poms.stream()
+            .map(PomProject::toDependency)
+            .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
 

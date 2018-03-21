@@ -21,16 +21,21 @@ class GradlePomResolver {
         this.projectRoot = projectRoot;
     }
 
-    List<PomProject> resolvePoms() throws Exception {
-        GradleInvoker gradleInvoker = new GradleInvoker(projectRoot.getAbsolutePath());
-
-        gradleInvoker.invoke("copyPoms", "-I", createInitScript());
-
-        String relativePoms = "build/poms";
-        File targetDir = new File(projectRoot, relativePoms);
-        assert targetDir.exists();
+    List<PomProject> resolvePomsOfAllDependencies() throws Exception {
+        File targetDir = resolvePomsAsFiles();
 
         return parsePomsInDir(targetDir);
+    }
+
+    private File resolvePomsAsFiles() throws Exception {
+        String relativePoms = "build/poms";
+
+        GradleInvoker gradleInvoker = new GradleInvoker(projectRoot.getAbsolutePath());
+        gradleInvoker.invoke("copyPoms", "-I", createInitScript());
+
+        File targetDir = new File(projectRoot, relativePoms);
+        assert targetDir.exists();
+        return targetDir;
     }
 
     private List<PomProject> parsePomsInDir(File targetDir) {

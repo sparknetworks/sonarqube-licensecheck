@@ -33,7 +33,7 @@ public class GradlePomResolverTest {
     public void resolvePoms() throws Exception {
         GradlePomResolver gradlePomResolver = new GradlePomResolver(projectRoot);
 
-        List<PomProject> poms = gradlePomResolver.resolvePoms();
+        List<PomProject> poms = gradlePomResolver.resolvePomsOfAllDependencies();
 
         PomProject pomProject = new PomProject();
         pomProject.setArtifactId("spock-core");

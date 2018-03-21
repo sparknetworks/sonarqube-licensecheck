@@ -31,7 +31,8 @@ public class GradleDependencyScannerTest {
 
         List<Dependency> dependencies = gradleDependencyScanner.scan(projectRoot);
 
-        Assert.assertEquals(4, dependencies.size());
+        System.out.println(dependencies);
+        Assert.assertEquals(6, dependencies.size());
         Assert.assertTrue(dependencies.contains(
             new Dependency("org.spockframework:spock-core",
                 "1.1-groovy-2.4",
