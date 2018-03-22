@@ -2,7 +2,6 @@ package at.porscheinformatik.sonarqube.licensecheck.gradle;
 
 import at.porscheinformatik.sonarqube.licensecheck.Dependency;
 import at.porscheinformatik.sonarqube.licensecheck.interfaces.Scanner;
-import at.porscheinformatik.sonarqube.licensecheck.maven.LicenseFinder;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependency;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
 import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
@@ -16,7 +15,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -33,11 +31,6 @@ public class GradleDependencyScanner implements Scanner {
         this.mavenDependencyService = mavenDependencyService;
     }
 
-    public GradleDependencyScanner() {
-        mavenDependencyService = null;
-        mavenLicenseService = null;
-    }
-
     @Override
     public List<Dependency> scan(File moduleDir) {
         this.projectRoot = moduleDir;
@@ -50,21 +43,15 @@ public class GradleDependencyScanner implements Scanner {
         }
     }
 
-
     private List<Dependency> resolveDependenciesWithLicenses() throws Exception {
         GradlePomResolver gradlePomResolver = new GradlePomResolver(projectRoot);
 
         List<Model> poms = gradlePomResolver.resolvePomsOfAllDependencies();
         List<Dependency> dependencies = pomsToDependencies(poms);
 
-        // todo: remove eventually
-        if (mavenDependencyService == null || mavenLicenseService == null) {
-            return dependencies;
-        }
-
         return dependencies.stream()
-            .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), null, null))
-            .map(this::matchLicense)
+            .map(this::matchLicenseByMavenDependency)
+            .map(this::mapLicenseByMatcher)
             .collect(Collectors.toList());
     }
 
@@ -76,27 +63,37 @@ public class GradleDependencyScanner implements Scanner {
     }
 
     private Dependency pomToDependency(Model model) {
-        inheritFromParent(model);
+        inheritGroupOrVersionFromParent(model);
         if (model.getGroupId() == null || model.getArtifactId() == null || model.getVersion() == null) {
             return null;
         }
-        String license = "";
         String group = model.getGroupId();
         String artifact = model.getArtifactId();
         String name = group + ":" + artifact;
-
-        // todo: how to use all licenses?
-        if (model.getLicenses() != null && model.getLicenses().size() > 0) {
-            license = model.getLicenses().get(0).getName();
-        }
-
-        return new Dependency(
+        Dependency dependency = new Dependency(
             name,
             model.getVersion(),
-            license);
+            "");
+
+        for (License currLicense : model.getLicenses()) {
+            String licenseName = currLicense.getName();
+            if (StringUtils.isNotBlank(licenseName)
+                && mavenLicenseService != null
+                && mavenLicenseService.getLicenseMap() != null) {
+                for (Map.Entry<Pattern, String> entry : mavenLicenseService.getLicenseMap().entrySet()) {
+                    if (entry.getKey().matcher(licenseName).matches()) {
+                        dependency.setLicense(entry.getValue());
+                        return dependency;
+                    }
+                }
+            }
+            LOGGER.info("No licenses found for '{}'", licenseName);
+        }
+
+        return dependency;
     }
 
-    private void inheritFromParent(Model pom) {
+    private void inheritGroupOrVersionFromParent(Model pom) {
         if (pom.getGroupId() == null && pom.getParent().getGroupId() != null) {
             pom.setGroupId(pom.getParent().getGroupId());
         }
@@ -105,46 +102,11 @@ public class GradleDependencyScanner implements Scanner {
         }
     }
 
-
-    // todo: reuse methods from MavenDependencyScanner..
-    private Function<Dependency, Dependency> loadLicenseFromPom(Map<Pattern, String> licenseMap, String userSettings,
-                                                                String globalSettings) {
-        return (Dependency dependency) ->
-        {
-            String path = dependency.getLocalPath();
-            if (path == null) {
-                return dependency;
-            }
-
-            int lastDotIndex = path.lastIndexOf('.');
-            if (lastDotIndex > 0) {
-                String pomPath = path.substring(0, lastDotIndex) + ".pom";
-                List<License> licenses = LicenseFinder.getLicenses(new File(pomPath), userSettings, globalSettings);
-                if (licenses.isEmpty()) {
-                    LOGGER.info("No licenses found in dependency {}", dependency.getName());
-                    return dependency;
-                }
-
-                for (License license : licenses) {
-                    String licenseName = license.getName();
-                    if (StringUtils.isNotBlank(licenseName)) {
-                        for (Map.Entry<Pattern, String> entry : licenseMap.entrySet()) {
-                            if (entry.getKey().matcher(licenseName).matches()) {
-                                dependency.setLicense(entry.getValue());
-                                return dependency;
-                            }
-                        }
-                    }
-                    LOGGER.info("No licenses found for '{}'", licenseName);
-                }
-            }
-
-            return dependency;
-        };
-    }
-
-    private Dependency mapMavenDependencyToLicense(Dependency dependency) {
-        if (StringUtils.isBlank(dependency.getLicense())) {
+    // todo: reuse methods from MavenDependencyScanner?
+    private Dependency matchLicenseByMavenDependency(Dependency dependency) {
+        if (StringUtils.isBlank(dependency.getLicense())
+            && mavenDependencyService != null
+            && mavenDependencyService.getMavenDependencies() != null) {
             for (MavenDependency allowedDependency : mavenDependencyService.getMavenDependencies()) {
                 String matchString = allowedDependency.getKey();
                 if (dependency.getName().matches(matchString)) {
@@ -155,12 +117,14 @@ public class GradleDependencyScanner implements Scanner {
         return dependency;
     }
 
-    private Dependency matchLicense(Dependency dependency) {
+    private Dependency mapLicenseByMatcher(Dependency dependency) {
         String licenseName = dependency.getLicense();
-        for (Map.Entry<Pattern, String> entry : mavenLicenseService.getLicenseMap().entrySet()) {
-            if (entry.getKey().matcher(licenseName).matches()) {
-                dependency.setLicense(entry.getValue());
-                return dependency;
+        if (mavenLicenseService != null && mavenLicenseService.getLicenseMap() != null) {
+            for (Map.Entry<Pattern, String> entry : mavenLicenseService.getLicenseMap().entrySet()) {
+                if (entry.getKey().matcher(licenseName).matches()) {
+                    dependency.setLicense(entry.getValue());
+                    return dependency;
+                }
             }
         }
         LOGGER.debug("Could not match license: " + licenseName);
