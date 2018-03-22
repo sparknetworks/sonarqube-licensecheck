@@ -64,7 +64,7 @@ public class GradleDependencyScanner implements Scanner {
 
         return dependencies.stream()
             .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), null, null))
-            .map(this::mapMavenDependencyToLicense)
+            .map(this::matchLicense)
             .collect(Collectors.toList());
     }
 
@@ -152,6 +152,18 @@ public class GradleDependencyScanner implements Scanner {
                 }
             }
         }
+        return dependency;
+    }
+
+    private Dependency matchLicense(Dependency dependency) {
+        String licenseName = dependency.getLicense();
+        for (Map.Entry<Pattern, String> entry : mavenLicenseService.getLicenseMap().entrySet()) {
+            if (entry.getKey().matcher(licenseName).matches()) {
+                dependency.setLicense(entry.getValue());
+                return dependency;
+            }
+        }
+        LOGGER.debug("Could not match license: " + licenseName);
         return dependency;
     }
 }
