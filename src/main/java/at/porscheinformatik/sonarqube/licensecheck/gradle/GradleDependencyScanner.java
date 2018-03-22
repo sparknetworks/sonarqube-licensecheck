@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -63,34 +64,49 @@ public class GradleDependencyScanner implements Scanner {
     }
 
     private Dependency pomToDependency(Model model) {
+
         inheritGroupOrVersionFromParent(model);
-        if (model.getGroupId() == null || model.getArtifactId() == null || model.getVersion() == null) {
+
+        if (StringUtils.isBlank(model.getGroupId())
+            || StringUtils.isBlank(model.getArtifactId())
+            || StringUtils.isBlank(model.getVersion())) {
             return null;
         }
-        String group = model.getGroupId();
-        String artifact = model.getArtifactId();
-        String name = group + ":" + artifact;
-        Dependency dependency = new Dependency(
-            name,
-            model.getVersion(),
-            "");
 
-        for (License currLicense : model.getLicenses()) {
-            String licenseName = currLicense.getName();
-            if (StringUtils.isNotBlank(licenseName)
-                && mavenLicenseService != null
-                && mavenLicenseService.getLicenseMap() != null) {
-                for (Map.Entry<Pattern, String> entry : mavenLicenseService.getLicenseMap().entrySet()) {
-                    if (entry.getKey().matcher(licenseName).matches()) {
-                        dependency.setLicense(entry.getValue());
-                        return dependency;
-                    }
-                }
-            }
-            LOGGER.info("No licenses found for '{}'", licenseName);
+        return new Dependency(
+            model.getGroupId() + ":" + model.getArtifactId(),
+            model.getVersion(),
+            selectMatchingLicenseFromLicenses(model));
+    }
+
+    private String selectMatchingLicenseFromLicenses(Model model) {
+        String license = "";
+
+        if (model.getLicenses() != null && model.getLicenses().size() > 0) {
+            license = model.getLicenses().get(0).getName();
         }
 
-        return dependency;
+        if (mavenLicenseService != null
+            && mavenLicenseService.getLicenseMap() != null) {
+            license = model.getLicenses().stream()
+                .filter(licenseNameIsNotBlank())
+                .filter(licenseHasMatchInLicenseMap())
+                .map(License::getName)
+                .findFirst()
+                .orElse("");
+        }
+        return license;
+    }
+
+    private Predicate<License> licenseNameIsNotBlank() {
+        return license -> StringUtils.isNotBlank(license.getName());
+    }
+
+    private Predicate<License> licenseHasMatchInLicenseMap() {
+        return license -> mavenLicenseService.getLicenseMap().entrySet().stream()
+            .map(entry -> entry.getKey().matcher(license.getName()).matches())
+            .findFirst()
+            .orElse(false);
     }
 
     private void inheritGroupOrVersionFromParent(Model pom) {
