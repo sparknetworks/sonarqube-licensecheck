@@ -29,6 +29,7 @@ public class MavenIntegrationTest {
     @Before
     public void setup() throws IOException {
         projectRoot = new File("target/testProject");
+        FileUtils.deleteDirectory(projectRoot);
         projectRoot.mkdirs();
 
         File buildGradleSrc = new File(this.getClass().getClassLoader().getResource("maven/pom.xml").getFile());
@@ -49,10 +50,9 @@ public class MavenIntegrationTest {
         when(dependencyService.getMavenDependencies()).thenReturn(Arrays.asList(new MavenDependency("org.apache.*", "Apache-2.0")));
         Scanner scanner = new MavenDependencyScanner(licenseService, dependencyService);
 
-        // -
         List<Dependency> dependencies = scanner.scan(projectRoot);
 
-        Assert.assertEquals(6, dependencies.size());
+        Assert.assertEquals(5, dependencies.size());
         Assert.assertTrue(dependencies.contains(
             new Dependency("org.spockframework:spock-core",
                 "1.1-groovy-2.4",

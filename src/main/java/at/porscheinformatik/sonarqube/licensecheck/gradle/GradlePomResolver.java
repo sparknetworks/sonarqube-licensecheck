@@ -55,8 +55,8 @@ class GradlePomResolver {
             return pomReader.read(new FileInputStream(file));
         } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     private String createInitScript() {

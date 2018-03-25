@@ -28,6 +28,7 @@ public class GradleIntegrationTest {
     @Before
     public void setup() throws IOException {
         projectRoot = new File("target/testProject");
+        FileUtils.deleteDirectory(projectRoot);
         projectRoot.mkdirs();
 
         File buildGradleSrc = new File(this.getClass().getClassLoader().getResource("gradle/build.gradle").getFile());
@@ -39,7 +40,7 @@ public class GradleIntegrationTest {
 
 
     @Test
-    public void scan() {
+    public void scanWithMatch() {
         Map<Pattern, String> licenseMap = new HashMap<>();
         licenseMap.put(Pattern.compile(".*Apache.*2.*"), "Apache-2.0");
         MavenLicenseService licenseService = Mockito.mock(MavenLicenseService.class);
@@ -51,10 +52,14 @@ public class GradleIntegrationTest {
 
         List<Dependency> dependencies = gradleDependencyScanner.scan(projectRoot);
 
-        Assert.assertEquals(6, dependencies.size());
+        Assert.assertEquals(13, dependencies.size());
         Assert.assertTrue(dependencies.contains(
             new Dependency("org.spockframework:spock-core",
                 "1.1-groovy-2.4",
                 "Apache-2.0")));
+        Assert.assertTrue(dependencies.contains(
+            new Dependency("org.tukaani:xz",
+                "1.5",
+                "Public Domain")));
     }
 }

@@ -6,7 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.model.License;
 import org.apache.maven.model.Model;
 
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 class PomDependencyMapper {
 
@@ -34,19 +36,33 @@ class PomDependencyMapper {
     }
 
     private String selectMatchingLicenseFromLicenses(Model model) {
-        return model.getLicenses().stream()
+        List<License> licenses = model.getLicenses().stream()
             .filter(licenseNameIsNotBlank())
-            .filter(licenseMatcher.licenseHasMatchInLicenseMap())
-            .map(License::getName)
-            .findFirst()
-            .orElse("");
+            .collect(Collectors.toList());
+
+        String license = null;
+        if (licenseMatcher != null) {
+            license = licenses.stream()
+                .map(License::getName)
+                .map(licenseMatcher::viaLicenseMap)
+                .findFirst()
+                .orElse("");
+        }
+
+        if (StringUtils.isBlank(license)) {
+            license = licenses.stream()
+                .map(License::getName)
+                .findFirst()
+                .orElse("");
+        }
+        return license;
     }
 
     private void inheritGroupOrVersionFromParent(Model pom) {
-        if (pom.getGroupId() == null && pom.getParent().getGroupId() != null) {
+        if (StringUtils.isBlank(pom.getGroupId()) && StringUtils.isNotBlank(pom.getParent().getGroupId())) {
             pom.setGroupId(pom.getParent().getGroupId());
         }
-        if (pom.getVersion() == null && pom.getParent().getVersion() != null) {
+        if (StringUtils.isBlank(pom.getVersion()) && StringUtils.isNotBlank(pom.getParent().getVersion())) {
             pom.setVersion(pom.getParent().getVersion());
         }
     }

@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class LicenseMatcher {
@@ -27,11 +26,14 @@ public class LicenseMatcher {
             }
         }
         LOGGER.debug("Could not match license: " + licenseName);
-        return "";
+        return licenseName;
     }
 
-    public Predicate<License> licenseHasMatchInLicenseMap() {
-        return license -> licenseMap.entrySet().stream()
+    public boolean licenseHasMatchInLicenseMap(License license) {
+        if (licenseMap == null) {
+            return false;
+        }
+        return licenseMap.entrySet().stream()
             .map(entry -> entry.getKey().matcher(license.getName()).matches())
             .findFirst()
             .orElse(false);

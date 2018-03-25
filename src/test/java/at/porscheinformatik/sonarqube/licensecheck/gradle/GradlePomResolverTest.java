@@ -22,6 +22,7 @@ public class GradlePomResolverTest {
     @Before
     public void setup() throws IOException {
         projectRoot = new File("target/testProject");
+        FileUtils.deleteDirectory(projectRoot);
         projectRoot.mkdirs();
 
         File buildGradleSrc = new File(this.getClass().getClassLoader().getResource("gradle/build.gradle").getFile());
