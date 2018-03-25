@@ -27,7 +27,7 @@ public class GradleIntegrationTest {
 
     @Before
     public void setup() throws IOException {
-        projectRoot = new File("build/testProject");
+        projectRoot = new File("target/testProject");
         projectRoot.mkdirs();
 
         File buildGradleSrc = new File(this.getClass().getClassLoader().getResource("gradle/build.gradle").getFile());

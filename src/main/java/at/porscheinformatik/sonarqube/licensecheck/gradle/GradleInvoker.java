@@ -42,6 +42,29 @@ class GradleInvoker {
         }
     }
 
+    String invoke(String... gradleTasks) throws IOException, GradleInvokerException {
+
+        String[] command = resolveFullGradleCommand(gradleTasks);
+
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        Process process = processBuilder.command(command).directory(projectRoot).start();
+
+        InputStream errorStream = process.getErrorStream();
+        InputStream inputStream = process.getInputStream();
+        String stderr = getOutput(errorStream);
+        String stdout = getOutput(inputStream);
+
+        while (process.isAlive()) {
+        }
+        if (process.exitValue() != 0) {
+            LOGGER.error("Failed execution of gradle command {}", Arrays.toString(command));
+            LOGGER.error("Gradle stderr: {}", stderr);
+            throw new GradleInvokerException("Failed execution of gradle command ");
+        }
+
+        return stdout;
+    }
+
     private String resolveGradleExecutable(File projectRoot) {
         File gradlew = new File(projectRoot, "gradlew");
 
@@ -69,29 +92,6 @@ class GradleInvoker {
             e.printStackTrace();
             return null;
         }
-    }
-
-    String invoke(String... gradleTasks) throws IOException, GradleInvokerException {
-
-        String[] command = resolveFullGradleCommand(gradleTasks);
-
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        Process process = processBuilder.command(command).directory(projectRoot).start();
-
-        InputStream errorStream = process.getErrorStream();
-        InputStream inputStream = process.getInputStream();
-        String stderr = getOutput(errorStream);
-        String stdout = getOutput(inputStream);
-
-        while (process.isAlive()) {
-        }
-        if (process.exitValue() != 0) {
-            LOGGER.error("Failed execution of gradle command {}", Arrays.toString(command));
-            LOGGER.error("Gradle stderr: {}", stderr);
-            throw new GradleInvokerException("Failed execution of gradle command ");
-        }
-
-        return stdout;
     }
 
     private String[] resolveFullGradleCommand(String[] gradleCommands) {

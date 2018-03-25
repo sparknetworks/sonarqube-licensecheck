@@ -24,7 +24,6 @@ class GradlePomResolver {
 
     List<Model> resolvePomsOfAllDependencies() throws Exception {
         File targetDir = resolvePomsAsFiles();
-
         return parsePomsInDir(targetDir);
     }
 
@@ -46,7 +45,6 @@ class GradlePomResolver {
             .map(File::getAbsolutePath)
             .map(this::parsePom)
             .filter(Objects::nonNull)
-            //.filter(pomProject -> pomProject.getLicenses() != null)
             .collect(Collectors.toList());
     }
 
