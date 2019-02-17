@@ -39,7 +39,7 @@ public class ValidateLicensesTest
     {
         final LicenseService licenseService = mock(LicenseService.class);
         when(licenseService.getLicenses()).thenReturn(Arrays.asList(new License("MIT", "MIT", false),
-            new License("LGPL is fantastic", "LGPL", true), APACHE_LICENSE));
+            new License("LGPL is fantastic", "LGPL-2.0", true), APACHE_LICENSE));
         validateLicenses = new ValidateLicenses(licenseService);
     }
 
@@ -78,7 +78,7 @@ public class ValidateLicensesTest
     {
         SensorContextTester context = createContext();
 
-        validateLicenses.validateLicenses(deps(new Dependency("another", "2.0", "(LGPL OR Apache-2.0)"),
+        validateLicenses.validateLicenses(deps(new Dependency("another", "2.0", "(LGPL-2.0 OR Apache-2.0)"),
             new Dependency("thing", "1.0", "(MIT OR Apache-2.0)")), context);
 
         assertThat(context.allIssues().isEmpty(), is(true));
@@ -90,7 +90,7 @@ public class ValidateLicensesTest
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(
-            deps(new Dependency("thing", "1.0", "(Apache-2.0 OR MIT OR Apache-2.0 OR LGPL)")), context);
+            deps(new Dependency("thing", "1.0", "(Apache-2.0 OR MIT OR Apache-2.0 OR LGPL-2.0)")), context);
 
         assertThat(context.allIssues().isEmpty(), is(true));
     }
@@ -100,7 +100,7 @@ public class ValidateLicensesTest
     {
         SensorContextTester context = createContext();
 
-        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(LGPL AND Apache-2.0)")), context);
+        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(LGPL-2.0 AND Apache-2.0)")), context);
 
         assertThat(context.allIssues().isEmpty(), is(true));
     }
@@ -111,7 +111,7 @@ public class ValidateLicensesTest
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(
-            deps(new Dependency("another", "2.0", "LGPL"), new Dependency("thing", "1.0", "(Apache-2.0 AND MIT)")),
+            deps(new Dependency("another", "2.0", "LGPL-2.0"), new Dependency("thing", "1.0", "(Apache-2.0 AND MIT)")),
             context);
 
         assertThat(context.allIssues().toString(), containsString(LicenseCheckMetrics.LICENSE_CHECK_NOT_ALLOWED_LICENSE_KEY));
@@ -122,7 +122,7 @@ public class ValidateLicensesTest
     {
         SensorContextTester context = createContext();
 
-        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(Apache-2.0 AND Apache-1.1)")), context);
+        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(Apache-2.0 AND Apache-1.1 AND Invalid-3.1)")), context);
         assertThat(context.allIssues().toString(), containsString(LicenseCheckMetrics.LICENSE_CHECK_UNLISTED_KEY));
     }
 
@@ -132,7 +132,7 @@ public class ValidateLicensesTest
     {
         SensorContextTester context = createContext();
 
-        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(LGPL OR (Apache-2.0 AND MIT))")),
+        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(LGPL-2.0 OR (Apache-2.0 AND MIT))")),
             context);
 
         assertThat(context.allIssues().isEmpty(), is(true));

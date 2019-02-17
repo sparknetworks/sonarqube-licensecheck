@@ -11,6 +11,8 @@ import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.function.Function.identity;
+
 public class LicenseProvider {
     private static final LicenseProvider INSTANCE = new LicenseProvider();
 
@@ -25,7 +27,8 @@ public class LicenseProvider {
         try (final InputStream resourceAsStream = LicenseProvider.class.getClassLoader().getResourceAsStream("spdx_licenses.json")) {
             if (resourceAsStream != null) {
                 wrapper = Converter.fromJsonString(IOUtils.toString(resourceAsStream, Charset.forName("UTF-8")));
-                licenseMap = wrapper.getLicenses().stream().collect(Collectors.toMap(SpdxLicense::getName, it -> it, (a,b) -> a));
+                licenseMap = wrapper.getLicenses().stream().collect(Collectors.toMap(SpdxLicense::getName, identity(), (a, b) -> a));
+                licenseMap.putAll(wrapper.getLicenses().stream().collect(Collectors.toMap(SpdxLicense::getLicenseID, identity(), (a, b) -> a)));
             }
         } catch (IOException e) {
             log.error("Could not read licenses from JSON", e);
@@ -48,7 +51,7 @@ public class LicenseProvider {
     private static SpdxLicense clone(SpdxLicense license) {
         try {
             return MAPPER.readValue(MAPPER.writeValueAsBytes(license), SpdxLicense.class);
-        } catch (IOException e){
+        } catch (IOException e) {
             log.info("Could not clone {}", license);
             return null;
         }
@@ -58,7 +61,7 @@ public class LicenseProvider {
         return INSTANCE.licenseMap.keySet().stream().sorted().collect(Collectors.toList());
     }
 
-    public static SpdxLicense getByName(String name) {
-        return clone(INSTANCE.licenseMap.get(name));
+    public static Optional<SpdxLicense> getByNameOrIdentifier(String name) {
+        return Optional.ofNullable(INSTANCE.licenseMap.get(name)).map(LicenseProvider::clone);
     }
 }
