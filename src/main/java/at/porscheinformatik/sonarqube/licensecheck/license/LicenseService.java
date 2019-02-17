@@ -56,7 +56,7 @@ public class LicenseService {
                 .orElse(null)
             )
             .filter(Objects::nonNull).collect(Collectors.toList());
-        logger.info("Retrieved {} strings for {}", strings, key);
+        logger.debug("Retrieved {} strings for {}", strings, key);
         return strings;
     }
 

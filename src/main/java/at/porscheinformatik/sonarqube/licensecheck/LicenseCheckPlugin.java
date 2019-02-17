@@ -57,6 +57,14 @@ public class LicenseCheckPlugin implements Plugin {
                 .defaultValue("false")
                 .index(1)
                 .build(),
+            PropertyDefinition.builder(LicenseCheckPropertyKeys.LICENSE_BLACKLIST_DEFAULT_KEY)
+                .category(LICENSE_CHECK)
+                .name("Blacklist handling")
+                .description("Blacklist all licenses except for the whitelisted ones")
+                .type(PropertyType.BOOLEAN)
+                .defaultValue("false")
+                .index(2)
+                .build(),
             PropertyDefinition.builder(LicenseCheckPropertyKeys.LICENSE_WHITELIST_KEY)
                 .defaultValue("")
                 .category(LICENSE_CHECK)
@@ -66,7 +74,7 @@ public class LicenseCheckPlugin implements Plugin {
                 .fields(
                     PropertyFieldDefinition.build(NAME).name(LICENSE).description("Name of the license").type(PropertyType.SINGLE_SELECT_LIST).options(LicenseProvider.getLicenseNames()).build()
                 )
-                .index(2)
+                .index(3)
                 .build(),
             PropertyDefinition.builder(LicenseCheckPropertyKeys.LICENSE_BLACKLIST_KEY)
                 .defaultValue("")
@@ -77,7 +85,7 @@ public class LicenseCheckPlugin implements Plugin {
                 .fields(
                     PropertyFieldDefinition.build(NAME).name(LICENSE).description("Name of the license").type(PropertyType.SINGLE_SELECT_LIST).options(LicenseProvider.getLicenseNames()).build()
                 )
-                .index(3)
+                .index(4)
                 .build(),
             PropertyDefinition.builder(LicenseCheckPropertyKeys.LICENSE_REGEX)
                 .category(LICENSE_CHECK)
@@ -87,7 +95,7 @@ public class LicenseCheckPlugin implements Plugin {
                     PropertyFieldDefinition.build(NAME_MATCHES).name(NAME_REGEX).type(PropertyType.REGULAR_EXPRESSION).build(),
                     PropertyFieldDefinition.build(LicenseCheckPropertyKeys.LICENSE).name(LICENSE).type(PropertyType.SINGLE_SELECT_LIST).options(LicenseProvider.getLicenseNames()).build()
                 )
-                .index(4)
+                .index(5)
                 .build(),
             PropertyDefinition.builder(LicenseCheckPropertyKeys.MAVEN_REGEX)
                 .category(LICENSE_CHECK)
@@ -97,7 +105,7 @@ public class LicenseCheckPlugin implements Plugin {
                     PropertyFieldDefinition.build(NAME_MATCHES).name(NAME_REGEX).type(PropertyType.REGULAR_EXPRESSION).build(),
                     PropertyFieldDefinition.build(LicenseCheckPropertyKeys.LICENSE).name(LICENSE).type(PropertyType.SINGLE_SELECT_LIST).options(LicenseProvider.getLicenseNames()).build()
                 )
-                .index(5)
+                .index(6)
                 .build(),
             PropertyDefinition.builder(INTERNAL_REGEX)
                 .category(LICENSE_CHECK)
@@ -106,7 +114,7 @@ public class LicenseCheckPlugin implements Plugin {
                 .fields(
                     PropertyFieldDefinition.build(NAME).name(NAME_REGEX).type(PropertyType.REGULAR_EXPRESSION).build()
                 )
-                .index(6)
+                .index(7)
                 .build()
         )
         );

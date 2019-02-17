@@ -80,7 +80,7 @@ public class LicenseCheckSensor implements ProjectSensor
                 dependencies.addAll(scanner.scan(fs.baseDir()));
             }
             LicenseValidationResult validatedDependencies = validateLicenses.validateLicenses(dependencies, context);
-            LOGGER.info("Validation result: {}", validatedDependencies);
+            LOGGER.debug("Validation result: {}", validatedDependencies);
             saveDependencies(context, validatedDependencies.getDependencies());
             saveLicenses(context, validatedDependencies.getLicenses());
         }
