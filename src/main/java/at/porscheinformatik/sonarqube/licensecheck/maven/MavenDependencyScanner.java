@@ -53,13 +53,19 @@ public class MavenDependencyScanner implements Scanner {
     @Override
     public List<Dependency> scan(File moduleDir) {
         MavenSettings commandLineArgs = getCommandLineArgs();
+        LOGGER.info("Module path is: {}", moduleDir.getPath());
         try (final Stream<Path> pathStream = Files.walk(moduleDir.toPath())) {
-            return pathStream.filter(path -> path.endsWith(POM_FILENAME)).peek(path -> LOGGER.info("Reading pom {}", path))
+            return pathStream.filter(path -> path.endsWith(POM_FILENAME))
+                // Sort the path so the uppermost module gets processed first - this is
+                // very naive as the parent could be anywhere in reality, we should search for the parent in all of the modules first
+                .sorted(Comparator.comparing(path -> path.toString().length()))
+                .peek(path -> LOGGER.info("Reading pom {}", path))
                 .flatMap(path -> readDependencyList(path.toFile(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
                 .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
                 .map(this::mapMavenDependencyToLicense)
                 .collect(Collectors.toList());
         } catch (IOException e) {
+
             LOGGER.error("Could not read all child poms of the module: ", e);
         }
         return Collections.emptyList();
@@ -75,7 +81,7 @@ public class MavenDependencyScanner implements Scanner {
         InvocationRequest request = buildInvocationRequest(moduleDir, userSettings, globalSettings, tempFile);
 
         Invoker invoker = new DefaultInvoker();
-        invoker.setOutputHandler(null); // not interested in Maven output itself
+        invoker.setOutputHandler(LOGGER::debug); // Push maven output to debug if available
 
         try {
             LOGGER.debug("Attempting to execute {}", request);
@@ -102,7 +108,6 @@ public class MavenDependencyScanner implements Scanner {
 
     private InvocationRequest buildInvocationRequest(File pomFile, String userSettings, String globalSettings, Path tempFile) {
         InvocationRequest request = new DefaultInvocationRequest();
-        request.setOutputHandler(s -> LOGGER.debug("IO: {}", s));
         request.setRecursive(false);
         List<String> goals = new ArrayList<>();
         try (final FileReader reader = new FileReader(pomFile)) {
