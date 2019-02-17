@@ -16,6 +16,7 @@ import org.sonar.api.scanner.ScannerSide;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @ScannerSide
 public class ValidateLicenses {
@@ -32,7 +33,7 @@ public class ValidateLicenses {
         result.addAllDependencies(dependencies);
         for (Dependency dependency : dependencies) {
             if (StringUtils.isBlank(dependency.getLicense())) {
-                licenseNotFoundIssue(context, dependency);
+                licenseNotFoundIssue(context, dependency, null);
             } else {
                 checkForLicenses(context, dependency, result);
             }
@@ -61,14 +62,13 @@ public class ValidateLicenses {
             return;
         }
         final LicenseModel licenseModel = constructModel(dependency.getLicense());
+        final List<License> usedLicenses = licenseModel.getUsedLicenses();
         if (licenseModel.hasUnmatched()) {
             dependency.setStatus("Unknown");
-            licenseNotFoundIssue(context, dependency);
+            licenseNotFoundIssue(context, dependency, licenseModel.getUnmatched());
         } else if (!licenseModel.isAllowed(licenses)) {
-            List<License> licensesContainingDependency = licenseModel.getUsedLicenses();
-            result.addAllLicenses(licensesContainingDependency);
             StringBuilder notAllowedLicensees = new StringBuilder();
-            for (License element : licensesContainingDependency) {
+            for (License element : usedLicenses) {
                 if (!element.getStatus()) {
                     notAllowedLicensees.append(element.getName()).append(" ");
                 }
@@ -78,6 +78,7 @@ public class ValidateLicenses {
         } else {
             dependency.setStatus("Allowed");
         }
+        result.addAllLicenses(licenses.stream().filter(usedLicenses::contains).collect(Collectors.toList()));
     }
 
 
@@ -135,7 +136,7 @@ public class ValidateLicenses {
         issue.save();
     }
 
-    private static void licenseNotFoundIssue(SensorContext context, Dependency dependency) {
+    private static void licenseNotFoundIssue(SensorContext context, Dependency dependency, Set<String> unmatched) {
         LOGGER.info("No License found for Dependency {}", dependency.getName());
 
         NewIssue issue = context
@@ -144,7 +145,7 @@ public class ValidateLicenses {
                 LicenseCheckMetrics.LICENSE_CHECK_UNLISTED_KEY))
             .at(new DefaultIssueLocation()
                 .on(context.project())
-                .message("No License found for Dependency: " + dependency.getName()));
+                .message("No License found for Dependency: " + dependency.getName() + ", Unknown licenses: " + unmatched));
         issue.save();
     }
 }

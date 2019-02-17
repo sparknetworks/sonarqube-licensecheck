@@ -74,4 +74,8 @@ public class LicenseModel {
     public void addUnmatched(String license) {
         this.unmatched.add(license);
     }
+
+    public Set<String> getUnmatched() {
+        return unmatched;
+    }
 }
