@@ -17,18 +17,18 @@ import org.slf4j.LoggerFactory;
 import org.sonar.api.ce.measure.Component;
 import org.sonar.api.ce.measure.Measure;
 import org.sonar.api.ce.measure.MeasureComputer;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.Configuration;
 
 import at.porscheinformatik.sonarqube.licensecheck.license.License;
 
 public class LicenseCheckMeasureComputer implements MeasureComputer
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenseCheckMeasureComputer.class);
-    private final Settings settings;
+    private final Configuration configuration;
 
-    public LicenseCheckMeasureComputer(Settings settings)
+    public LicenseCheckMeasureComputer(Configuration configuration)
     {
-        this.settings = settings;
+        this.configuration = configuration;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class LicenseCheckMeasureComputer implements MeasureComputer
     @Override
     public void compute(MeasureComputerContext context)
     {
-        if (settings.getBoolean(ACTIVATION_KEY))
+        if (configuration.getBoolean(ACTIVATION_KEY).orElse(false))
         {
             Component.Type type = context.getComponent().getType();
             if (type == MODULE || type == PROJECT)

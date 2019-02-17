@@ -1,60 +1,66 @@
 package at.porscheinformatik.sonarqube.licensecheck.license;
 
-import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.LICENSE_KEY;
-
-import java.util.Collection;
-import java.util.List;
-
-import org.sonar.api.batch.ScannerSide;
-import org.sonar.api.batch.bootstrap.ProjectDefinition;
-import org.sonar.api.config.Settings;
+import at.porscheinformatik.sonarqube.licensecheck.spdx.LicenseProvider;
+import at.porscheinformatik.sonarqube.licensecheck.spdx.SpdxLicense;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.sonar.api.config.Configuration;
+import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.ServerSide;
 
-import at.porscheinformatik.sonarqube.licensecheck.projectLicense.ProjectLicense;
-import at.porscheinformatik.sonarqube.licensecheck.projectLicense.ProjectLicenseService;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.*;
 
 @ServerSide
 @ScannerSide
-public class LicenseService
-{
-    private final Settings settings;
-    private final ProjectLicenseService projectLicenseService;
+public class LicenseService {
 
-    public LicenseService(Settings settings, ProjectLicenseService projectLicenseService)
-    {
+    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
+    private final Configuration configuration;
+
+    public LicenseService(Configuration configuration) {
         super();
-        this.settings = settings;
-        this.projectLicenseService = projectLicenseService;
+        this.configuration = configuration;
     }
 
-    public List<License> getLicenses(ProjectDefinition module)
-    {
-        List<License> globalLicenses = getLicenses();
+    public List<License> getLicenses() {
+        List<License> globalLicenses = getGlobalLicenses();
 
-        if (module == null)
-        {
-            return globalLicenses;
-        }
+        final List<String> whitelist = retrieveLicensesList(LICENSE_WHITELIST_KEY);
+        final List<String> blacklist = retrieveLicensesList(LICENSE_BLACKLIST_KEY);
+        final boolean blacklistByDefault = configuration.getBoolean(LICENSE_BLACKLIST_DEFAULT_KEY).orElse(false);
 
-        Collection<ProjectLicense> projectLicenses = projectLicenseService.getProjectLicenseList(module.getKey());
-
-        for (License license : globalLicenses)
-        {
-            for (ProjectLicense projectLicense : projectLicenses)
-            {
-                if (license.getIdentifier().equals(projectLicense.getLicense()))
-                {
-                    license.setStatus(projectLicense.getStatus()); //override the stati of the globalLicenses
-                }
+        return globalLicenses.stream().peek(it -> {
+            if (whitelist.contains(it.getName())) {
+                it.setStatus(true);
+            } else if (blacklist.contains(it.getName())) {
+                it.setStatus(false);
+            } else if (!blacklistByDefault) {
+                it.setStatus(true);
             }
-        }
-
-        return globalLicenses;
+        }).collect(Collectors.toList());
     }
 
-    public List<License> getLicenses()
-    {
-        String licenseString = settings.getString(LICENSE_KEY);
-        return License.fromString(licenseString);
+    private List<String> retrieveLicensesList(String key) {
+        return retrieveStringList(key, configuration);
+    }
+
+    public static List<String> retrieveStringList(String key, Configuration configuration) {
+        final List<String> strings = Arrays.stream(configuration.getStringArray(key))
+            .map(it -> configuration
+                .get(key + "." + it + "." + NAME)
+                .orElse(null)
+            )
+            .filter(Objects::nonNull).collect(Collectors.toList());
+        logger.info("Retrieved {} strings for {}", strings, key);
+        return strings;
+    }
+
+    public List<License> getGlobalLicenses() {
+        return LicenseProvider.getLicenses().stream().map(SpdxLicense::toLicense).collect(Collectors.toList());
     }
 }

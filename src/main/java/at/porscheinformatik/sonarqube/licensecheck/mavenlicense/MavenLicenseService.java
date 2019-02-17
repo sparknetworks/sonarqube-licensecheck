@@ -1,38 +1,40 @@
 package at.porscheinformatik.sonarqube.licensecheck.mavenlicense;
 
-import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.LICENSE_REGEX;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import org.sonar.api.batch.ScannerSide;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.Configuration;
+import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.ServerSide;
+
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.*;
 
 @ServerSide
 @ScannerSide
-public class MavenLicenseService
-{
-    private final Settings settings;
+public class MavenLicenseService {
+    private final Configuration settings;
 
-    public MavenLicenseService(Settings settings)
-    {
+    public MavenLicenseService(Configuration settings) {
         super();
         this.settings = settings;
     }
 
-    public List<MavenLicense> getMavenLicenseList()
-    {
-        return MavenLicense.fromString(settings.getString(LICENSE_REGEX));
+    public List<MavenLicense> getMavenLicenseList() {
+        final String[] positions = settings.getStringArray(LICENSE_REGEX);
+        return Arrays.stream(positions).map(it -> {
+            final Optional<String> license = settings.get(LICENSE_REGEX + "." + it + "." + LICENSE);
+            final Optional<String> regex = settings.get(LICENSE_REGEX + "." + it + "." + NAME_MATCHES);
+            if (license.isPresent() && regex.isPresent()) {
+                return new MavenLicense(regex.get(), license.get());
+            }
+            return null;
+        }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    public Map<Pattern, String> getLicenseMap()
-    {
+    public Map<Pattern, String> getLicenseMap() {
         Map<Pattern, String> licenseMap = new HashMap<>();
-        for (MavenLicense license : getMavenLicenseList())
-        {
+        for (MavenLicense license : getMavenLicenseList()) {
             licenseMap.put(license.getRegex(), license.getLicense());
         }
         return licenseMap;

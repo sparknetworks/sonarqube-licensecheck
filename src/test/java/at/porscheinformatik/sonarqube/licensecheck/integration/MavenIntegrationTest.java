@@ -3,6 +3,7 @@ package at.porscheinformatik.sonarqube.licensecheck.integration;
 import at.porscheinformatik.sonarqube.licensecheck.Dependency;
 import at.porscheinformatik.sonarqube.licensecheck.gradle.GradleProjectResolver;
 import at.porscheinformatik.sonarqube.licensecheck.interfaces.Scanner;
+import at.porscheinformatik.sonarqube.licensecheck.internal.InternalDependenciesService;
 import at.porscheinformatik.sonarqube.licensecheck.maven.MavenDependencyScanner;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependency;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
@@ -11,14 +12,12 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static org.mockito.Mockito.when;
@@ -45,8 +44,10 @@ public class MavenIntegrationTest {
         MavenLicenseService licenseService = Mockito.mock(MavenLicenseService.class);
         when(licenseService.getLicenseMap()).thenReturn(licenseMap);
         final MavenDependencyService dependencyService = Mockito.mock(MavenDependencyService.class);
+        final InternalDependenciesService internalDependenciesService = Mockito.mock(InternalDependenciesService.class);
+        when(internalDependenciesService.getInternalDependencyRegexes()).thenReturn(Collections.emptyList());
         when(dependencyService.getMavenDependencies()).thenReturn(Arrays.asList(new MavenDependency("org.apache.*", "Apache-2.0")));
-        Scanner scanner = new MavenDependencyScanner(licenseService, dependencyService);
+        Scanner scanner = new MavenDependencyScanner(licenseService, dependencyService, internalDependenciesService);
 
         List<Dependency> dependencies = scanner.scan(projectRoot);
 

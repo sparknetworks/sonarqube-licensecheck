@@ -17,8 +17,9 @@
           <td>{{dependency.version}}</td>
           <td>{{dependency.license}}</td>
           <td>
-            <span :class="{ 'icon-license-ok': dependency.status === 'Allowed', 'icon-license-nok': dependency.status === 'Forbidden', 'icon-license-unknown': dependency.status === 'Unknown' }"></span>
-            {{dependency.status}}
+            <span :class="{ 'icon-license-unknown': dependency.status !== 'Allowed' && dependency.status !== 'Forbidden', 'icon-license-ok': dependency.status === 'Allowed', 'icon-license-nok': dependency.status === 'Forbidden' }"></span>
+            <span v-if="dependency.status !== 'Allowed' && dependency.status !== 'Forbidden'">Unknown</span>
+            <span v-else>{{dependency.status}}</span>
           </td>
         </tr>
       </tbody>

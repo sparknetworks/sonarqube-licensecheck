@@ -1,34 +1,48 @@
 package at.porscheinformatik.sonarqube.licensecheck.license;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.ArrayList;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import javax.json.stream.JsonGenerator;
-
-import org.apache.commons.lang3.StringUtils;
+import java.util.stream.Collectors;
 
 public class License implements Comparable<License>
 {
+    private static final ObjectMapper mapper = new ObjectMapper();
     private String name;
     private String identifier;
-    private String status;
+    private Boolean status;
 
-    public License(String name, String identifier, String status)
+    public License() {
+    }
+
+    public License(String name, String identifier, Boolean status)
     {
         super();
         this.name = name;
         this.identifier = identifier;
         this.status = status;
+    }
+
+    public static String createString(Collection<License> licensesWithChildren) {
+        try {
+            return mapper.writeValueAsString(licensesWithChildren.stream().sorted(Comparator.comparing(License::getName)).collect(Collectors.toList()));
+        } catch (JsonProcessingException e) {
+            return "";
+        }
+    }
+
+    public static List<License> fromString(String stringValue) {
+        try {
+            return mapper.readValue(stringValue, new TypeReference<List<License>>(){});
+        } catch (IOException e) {
+            return Collections.emptyList();
+        }
     }
 
     public String getName()
@@ -51,12 +65,12 @@ public class License implements Comparable<License>
         this.identifier = identifier;
     }
 
-    public String getStatus()
+    public Boolean getStatus()
     {
         return status;
     }
 
-    public void setStatus(String status)
+    public void setStatus(Boolean status)
     {
         this.status = status;
     }
@@ -78,92 +92,6 @@ public class License implements Comparable<License>
         return "{name:" + name + ", identifier:" + identifier + ", status:" + status + "}";
     }
 
-    public static List<License> fromString(String serializedLicensesString)
-    {
-        List<License> licenses = new ArrayList<>();
-
-        if (serializedLicensesString != null)
-        {
-            if (serializedLicensesString.startsWith("["))
-            {
-                try (JsonReader jsonReader = Json.createReader(new StringReader(serializedLicensesString)))
-                {
-                    JsonArray licensesJson = jsonReader.readArray();
-                    for (JsonObject licenseJson : licensesJson.getValuesAs(JsonObject.class))
-                    {
-                        licenses.add(new License(licenseJson.getString("name"), licenseJson.getString("identifier"),
-                            licenseJson.getString("status")));
-                    }
-                }
-            }
-            else if (serializedLicensesString.startsWith("{"))
-            {
-                readLegacyJson(serializedLicensesString, licenses);
-            }
-            else
-            {
-                readLegaySeparated(serializedLicensesString, licenses);
-            }
-        }
-        return licenses;
-    }
-
-    @Deprecated
-    private static void readLegaySeparated(String serializedLicensesString, List<License> licenses)
-    {
-        // deprecated - remove with later release
-        if (StringUtils.isNotEmpty(serializedLicensesString))
-        {
-            String[] parts = serializedLicensesString.split(";");
-
-            for (String licenseString : parts)
-            {
-                String[] subParts = licenseString.split("~");
-                String name = subParts.length > 0 ? subParts[0] : null;
-                String identifier = subParts.length > 1 ? subParts[1] : null;
-                String status = subParts.length > 2 ? subParts[2] : null;
-                licenses.add(new License(name, identifier, status));
-            }
-        }
-    }
-
-    @Deprecated
-    private static void readLegacyJson(String serializedLicensesString, List<License> licenses)
-    {
-        // deprecated - remove with later release
-        try (JsonReader jsonReader = Json.createReader(new StringReader(serializedLicensesString)))
-        {
-            JsonObject licensesJson = jsonReader.readObject();
-            for (Map.Entry<String, JsonValue> licenseJson : licensesJson.entrySet())
-            {
-                JsonObject value = (JsonObject) licenseJson.getValue();
-                licenses.add(new License(value.getString("name"), licenseJson.getKey(),
-                    value.getString("status")));
-            }
-        }
-    }
-
-    public static String createString(Collection<License> licenses)
-    {
-        TreeSet<License> licenseSet = new TreeSet<>();
-        licenseSet.addAll(licenses);
-
-        StringWriter jsonString = new StringWriter();
-        JsonGenerator generator = Json.createGenerator(jsonString);
-        generator.writeStartArray();
-        for (License license : licenseSet)
-        {
-            generator.writeStartObject();
-            generator.write("name", license.getName());
-            generator.write("identifier", license.getIdentifier());
-            generator.write("status", license.getStatus());
-            generator.writeEnd();
-        }
-        generator.writeEnd();
-        generator.close();
-
-        return jsonString.toString();
-    }
 
     @Override
     public int compareTo(License o)
