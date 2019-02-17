@@ -58,7 +58,7 @@ public class LicenseProvider {
     }
 
     public static List<String> getLicenseNames() {
-        return INSTANCE.licenseMap.keySet().stream().sorted().collect(Collectors.toList());
+        return getLicenses().stream().map(SpdxLicense::getName).collect(Collectors.toList());
     }
 
     public static Optional<SpdxLicense> getByNameOrIdentifier(String name) {
