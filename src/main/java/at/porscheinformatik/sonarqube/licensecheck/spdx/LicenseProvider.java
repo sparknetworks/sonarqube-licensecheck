@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
@@ -20,32 +22,43 @@ public class LicenseProvider {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
+    private LicensesWrapper additional = null;
     private LicensesWrapper wrapper = null;
     private Map<String, SpdxLicense> licenseMap = new HashMap<>();
 
     private LicenseProvider() {
-        try (final InputStream resourceAsStream = LicenseProvider.class.getClassLoader().getResourceAsStream("spdx_licenses.json")) {
+        retrieveLicensesFromFile("spdx_licenses.json", licensesWrapper -> this.wrapper = licensesWrapper);
+        retrieveLicensesFromFile("additional_licenses.json", licensesWrapper -> this.additional = licensesWrapper);
+    }
+
+    private void retrieveLicensesFromFile(String name, Consumer<LicensesWrapper> wrapperConsumer) {
+        try (final InputStream resourceAsStream = LicenseProvider.class.getClassLoader().getResourceAsStream(name)) {
             if (resourceAsStream != null) {
-                wrapper = Converter.fromJsonString(IOUtils.toString(resourceAsStream, Charset.forName("UTF-8")));
-                licenseMap = wrapper.getLicenses().stream().filter(it -> !it.isDeprecatedLicenseID()).collect(Collectors.toMap(SpdxLicense::getName, identity(), (a, b) -> a));
-                licenseMap.putAll(wrapper.getLicenses().stream().filter(it -> !it.isDeprecatedLicenseID()).collect(Collectors.toMap(SpdxLicense::getLicenseID, identity(), (a, b) -> a)));
+                final LicensesWrapper licensesWrapper = Converter.fromJsonString(IOUtils.toString(resourceAsStream, Charset.forName("UTF-8")));
+                wrapperConsumer.accept(licensesWrapper);
+                // Prefer non-deprecated licenses
+                final BinaryOperator<SpdxLicense> discriminator = (a, b) -> a.isDeprecatedLicenseID() ? b : a;
+                licenseMap.putAll(licensesWrapper.getLicenses().stream().collect(Collectors.toMap(SpdxLicense::getName, identity(), discriminator)));
+                licenseMap.putAll(licensesWrapper.getLicenses().stream().collect(Collectors.toMap(SpdxLicense::getLicenseID, identity(), discriminator)));
             }
         } catch (IOException e) {
             log.error("Could not read licenses from JSON", e);
         }
     }
 
-    private static Optional<LicensesWrapper> wrapper() {
-        return Optional.ofNullable(INSTANCE.wrapper);
+    private static Optional<LicensesWrapper> wrapper(LicensesWrapper wrapper) {
+        return Optional.ofNullable(wrapper);
     }
 
 
     public static List<SpdxLicense> getLicenses() {
-        return wrapper().map(LicensesWrapper::getLicenses).orElse(Collections.emptyList());
+        final List<SpdxLicense> spdxLicenses = wrapper(INSTANCE.wrapper).map(LicensesWrapper::getLicenses).orElseGet(ArrayList::new);
+        spdxLicenses.addAll(wrapper(INSTANCE.additional).map(LicensesWrapper::getLicenses).orElse(Collections.emptyList()));
+        return spdxLicenses;
     }
 
     public static String getVersion() {
-        return wrapper().map(LicensesWrapper::getLicenseListVersion).orElse("");
+        return wrapper(INSTANCE.wrapper).map(LicensesWrapper::getLicenseListVersion).orElse("");
     }
 
     private static SpdxLicense clone(SpdxLicense license) {

@@ -44,8 +44,8 @@ public class TestDataBuilder {
         return license;
     }
 
-    public static Map<Pattern, String> licenseMap(String regex, String license) {
-        return Collections.singletonMap(Pattern.compile(regex), license);
+    public static Map<String, String> licenseMap(String regex, String license) {
+        return Collections.singletonMap(regex, license);
     }
 
     public static List<MavenDependency> mavenDependencies(String regex, String license) {

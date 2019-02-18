@@ -31,8 +31,8 @@ public class MavenDependencyScannerTest {
     public void testLicensesAreFound() {
         File moduleDir = new File(".");
 
-        Map<Pattern, String> licenseMap = new HashMap<>();
-        licenseMap.put(Pattern.compile(".*Apache.*2.*"), "Apache-2.0");
+        Map<String, String> licenseMap = new HashMap<>();
+        licenseMap.put(".*Apache.*2.*", "Apache-2.0");
         MavenLicenseService licenseService = Mockito.mock(MavenLicenseService.class);
         when(licenseService.getLicenseMap()).thenReturn(licenseMap);
         final InternalDependenciesService internalDependenciesService = Mockito.mock(InternalDependenciesService.class);

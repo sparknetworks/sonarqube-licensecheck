@@ -105,7 +105,11 @@ public class MavenDependencyScanner implements Scanner {
             LOGGER.debug("Attempting to execute {}", request);
             InvocationResult result = invoker.execute(request);
             if (result.getExitCode() != 0) {
-                LOGGER.warn("Could not get dependency list via maven", result.getExecutionException());
+                if(LOGGER.isDebugEnabled()){
+                    LOGGER.debug("Could not get dependency list via maven", result.getExecutionException());
+                } else {
+                    LOGGER.warn("Could not get dependency list via maven {}", result.getExecutionException().getMessage());
+                }
             }
 
             return findDependenciesInFile(tempFile);

@@ -1,0 +1,17 @@
+{
+  "licenseListVersion": "Custom",
+  "licenses": [
+    {
+      "reference": null,
+      "isDeprecatedLicenseId": false,
+      "detailsUrl": null,
+      "referenceNumber": null,
+      "name": "Public Domain",
+      "licenseId": "PDL",
+      "seeAlso": [
+        "https://en.wikipedia.org/wiki/Public_domain"
+      ],
+      "isOsiApproved": false
+    }
+  ]
+}

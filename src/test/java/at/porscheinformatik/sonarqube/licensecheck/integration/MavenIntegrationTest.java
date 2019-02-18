@@ -39,8 +39,8 @@ public class MavenIntegrationTest {
 
     @Test
     public void scan() {
-        Map<Pattern, String> licenseMap = new HashMap<>();
-        licenseMap.put(Pattern.compile(".*Apache.*2.*"), "Apache-2.0");
+        Map<String, String> licenseMap = new HashMap<>();
+        licenseMap.put(".*Apache.*2.*", "Apache-2.0");
         MavenLicenseService licenseService = Mockito.mock(MavenLicenseService.class);
         when(licenseService.getLicenseMap()).thenReturn(licenseMap);
         final MavenDependencyService dependencyService = Mockito.mock(MavenDependencyService.class);
