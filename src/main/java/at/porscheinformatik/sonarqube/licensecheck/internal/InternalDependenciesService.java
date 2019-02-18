@@ -1,6 +1,6 @@
 package at.porscheinformatik.sonarqube.licensecheck.internal;
 
-import at.porscheinformatik.sonarqube.licensecheck.license.LicenseService;
+import at.porscheinformatik.sonarqube.licensecheck.sonarqube.PropertiesScanner;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.ServerSide;
@@ -8,6 +8,7 @@ import org.sonar.api.server.ServerSide;
 import java.util.List;
 
 import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.INTERNAL_REGEX;
+import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.NAME;
 
 @ServerSide
 @ScannerSide
@@ -20,6 +21,6 @@ public class InternalDependenciesService {
     }
 
     public List<String> getInternalDependencyRegexes() {
-        return LicenseService.retrieveStringList(INTERNAL_REGEX, configuration);
+        return PropertiesScanner.retrieveStringList(configuration, INTERNAL_REGEX, NAME);
     }
 }
