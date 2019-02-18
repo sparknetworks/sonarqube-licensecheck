@@ -24,7 +24,7 @@ public class MavenLicenseService {
 
     public List<MavenLicense> getMavenLicenseList() {
         return PropertiesScanner.retrieveMapStream(configuration, LICENSE_REGEX, LICENSE, NAME_MATCHES)
-            .map(item -> new MavenLicense(item.get(NAME_MATCHES), item.get(NAME_MATCHES))).collect(Collectors.toList());
+            .map(item -> new MavenLicense(item.get(NAME_MATCHES), item.get(LICENSE))).collect(Collectors.toList());
     }
 
     public Map<String, String> getLicenseMap() {

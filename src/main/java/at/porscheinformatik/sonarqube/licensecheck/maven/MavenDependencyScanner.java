@@ -124,7 +124,7 @@ public class MavenDependencyScanner implements Scanner {
         });
 
         Invoker invoker = new DefaultInvoker();
-        invoker.setOutputHandler(LOGGER::info); // Push maven output to debug if available
+        invoker.setOutputHandler(LOGGER::debug); // Push maven output to debug if available
         invoker.setErrorHandler(LOGGER::error);
 
         try {
