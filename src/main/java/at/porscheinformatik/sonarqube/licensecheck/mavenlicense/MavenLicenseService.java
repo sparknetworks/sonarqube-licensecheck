@@ -5,7 +5,6 @@ import org.sonar.api.scanner.ScannerSide;
 import org.sonar.api.server.ServerSide;
 
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.*;
@@ -32,8 +31,8 @@ public class MavenLicenseService {
         }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    public Map<Pattern, String> getLicenseMap() {
-        Map<Pattern, String> licenseMap = new HashMap<>();
+    public Map<String, String> getLicenseMap() {
+        Map<String, String> licenseMap = new HashMap<>();
         for (MavenLicense license : getMavenLicenseList()) {
             licenseMap.put(license.getRegex(), license.getLicense());
         }

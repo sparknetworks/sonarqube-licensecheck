@@ -23,9 +23,9 @@ public class SpdxLicense {
     public void setReference(String value) { this.reference = value; }
 
     @JsonProperty("isDeprecatedLicenseId")
-    public Boolean getIsDeprecatedLicenseID() { return isDeprecatedLicenseID; }
+    public Boolean isDeprecatedLicenseID() { return isDeprecatedLicenseID; }
     @JsonProperty("isDeprecatedLicenseId")
-    public void setIsDeprecatedLicenseID(Boolean value) { this.isDeprecatedLicenseID = value; }
+    public void setDeprecatedLicenseID(Boolean value) { this.isDeprecatedLicenseID = value; }
 
     @JsonProperty("detailsUrl")
     public String getDetailsURL() { return detailsURL; }
@@ -53,14 +53,14 @@ public class SpdxLicense {
     public void setSeeAlso(List<String> value) { this.seeAlso = value; }
 
     @JsonProperty("isOsiApproved")
-    public Boolean getIsOSIApproved() { return isOSIApproved; }
+    public Boolean isOSIApproved() { return isOSIApproved; }
     @JsonProperty("isOsiApproved")
-    public void setIsOSIApproved(Boolean value) { this.isOSIApproved = value; }
+    public void setOSIApproved(Boolean value) { this.isOSIApproved = value; }
 
     @JsonProperty("isFsfLibre")
-    public Boolean getIsFSFLibre() { return isFSFLibre; }
+    public Boolean isFSFLibre() { return isFSFLibre; }
     @JsonProperty("isFsfLibre")
-    public void setIsFSFLibre(Boolean value) { this.isFSFLibre = value; }
+    public void setFSFLibre(Boolean value) { this.isFSFLibre = value; }
 
     @JsonProperty("status")
     public String getStatus() { return status; }

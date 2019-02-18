@@ -27,8 +27,8 @@ public class LicenseProvider {
         try (final InputStream resourceAsStream = LicenseProvider.class.getClassLoader().getResourceAsStream("spdx_licenses.json")) {
             if (resourceAsStream != null) {
                 wrapper = Converter.fromJsonString(IOUtils.toString(resourceAsStream, Charset.forName("UTF-8")));
-                licenseMap = wrapper.getLicenses().stream().collect(Collectors.toMap(SpdxLicense::getName, identity(), (a, b) -> a));
-                licenseMap.putAll(wrapper.getLicenses().stream().collect(Collectors.toMap(SpdxLicense::getLicenseID, identity(), (a, b) -> a)));
+                licenseMap = wrapper.getLicenses().stream().filter(it -> !it.isDeprecatedLicenseID()).collect(Collectors.toMap(SpdxLicense::getName, identity(), (a, b) -> a));
+                licenseMap.putAll(wrapper.getLicenses().stream().filter(it -> !it.isDeprecatedLicenseID()).collect(Collectors.toMap(SpdxLicense::getLicenseID, identity(), (a, b) -> a)));
             }
         } catch (IOException e) {
             log.error("Could not read licenses from JSON", e);

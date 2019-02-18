@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,9 +57,8 @@ public class MavenDependencyScanner implements Scanner {
         LOGGER.info("Module path is: {}", moduleDir.getPath());
         try (final Stream<Path> pathStream = Files.walk(moduleDir.toPath())) {
             return pathStream.filter(path -> path.endsWith(POM_FILENAME))
-                // Sort the path so the uppermost module gets processed first - this is
-                // very naive as the parent could be anywhere in reality, we should search for the parent in all of the modules first
-                .sorted(Comparator.comparing(path -> path.toString().length()))
+                // Select the parent pom and make sure we run it recursively so it adds all the child deps.
+                .filter(this::selectParent)
                 .peek(path -> LOGGER.info("Reading pom {}", path))
                 .flatMap(path -> readDependencyList(path.toFile(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
                 .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
@@ -72,13 +72,31 @@ public class MavenDependencyScanner implements Scanner {
 
     }
 
+    private boolean selectParent(Path path) {
+        try (final FileReader reader = new FileReader(path.toFile())) {
+            final Model model = new MavenXpp3Reader().read(reader);
+            if (model.getParent() == null) {
+                return true;
+            }
+        } catch (IOException | XmlPullParserException e) {
+            LOGGER.warn("Could not read pom information");
+        }
+        return false;
+    }
+
     private Stream<Dependency> readDependencyList(File moduleDir, String userSettings, String globalSettings) {
         Path tempFile = createTempFile();
         if (tempFile == null) {
             return Stream.empty();
         }
 
-        InvocationRequest request = buildInvocationRequest(moduleDir, userSettings, globalSettings, tempFile);
+        InvocationRequest request = buildInvocationRequest(moduleDir, userSettings, globalSettings, Arrays.asList("install", "dependency:list"), properties -> {
+            properties.setProperty("outputFile", tempFile.toAbsolutePath().toString());
+            properties.setProperty("outputAbsoluteArtifactFilename", "true");
+            properties.setProperty("includeScope", "runtime"); // only runtime (scope compile + runtime)
+            properties.setProperty("appendOutput", "true");
+            properties.setProperty("skipTests", "true");
+        });
 
         Invoker invoker = new DefaultInvoker();
         invoker.setOutputHandler(LOGGER::debug); // Push maven output to debug if available
@@ -106,20 +124,10 @@ public class MavenDependencyScanner implements Scanner {
             .filter(Objects::nonNull);
     }
 
-    private InvocationRequest buildInvocationRequest(File pomFile, String userSettings, String globalSettings, Path tempFile) {
+    private InvocationRequest buildInvocationRequest(File pomFile, String userSettings, String globalSettings, List<String> goals, Consumer<Properties> propertiesConsumer) {
         InvocationRequest request = new DefaultInvocationRequest();
-        request.setRecursive(false);
-        List<String> goals = new ArrayList<>();
-        try (final FileReader reader = new FileReader(pomFile)) {
-            final Model model = new MavenXpp3Reader().read(reader);
-            if (!model.getModules().isEmpty()) {
-                goals.add("install");
-            }
-        } catch (IOException | XmlPullParserException e) {
-            LOGGER.warn("Could not read pom information");
-        }
+        request.setRecursive(true);
         request.setPomFile(pomFile);
-        goals.add("dependency:list");
         request.setGoals(goals);
         if (userSettings != null) {
             final File userSettingsFile = new File(userSettings);
@@ -132,14 +140,15 @@ public class MavenDependencyScanner implements Scanner {
             request.setGlobalSettingsFile(globalSettingsFile);
         }
         Properties properties = new Properties();
-        properties.setProperty("outputFile", tempFile.toAbsolutePath().toString());
-        properties.setProperty("outputAbsoluteArtifactFilename", "true");
-        properties.setProperty("includeScope", "runtime"); // only runtime (scope compile + runtime)
-        properties.setProperty("skipTests", "runtime"); // skip tests
-        if (System.getProperty(MAVEN_REPO_LOCAL) != null) {
-            properties.setProperty(MAVEN_REPO_LOCAL, System.getProperty(MAVEN_REPO_LOCAL));
-        }
         request.setProperties(properties);
+        if (System.getProperty(MAVEN_REPO_LOCAL) != null) {
+            final File localRepository = new File(System.getProperty(MAVEN_REPO_LOCAL));
+            if (localRepository.canWrite()) {
+                request.setLocalRepositoryDirectory(localRepository);
+            }
+        }
+        propertiesConsumer.accept(properties);
+
         return request;
     }
 
@@ -170,19 +179,15 @@ public class MavenDependencyScanner implements Scanner {
         return null;
     }
 
-    private Function<Dependency, Dependency> loadLicenseFromPom(Map<Pattern, String> licenseMap, String userSettings,
+    private Function<Dependency, Dependency> loadLicenseFromPom(Map<String, String> licenseMap, String userSettings,
                                                                 String globalSettings) {
         return (Dependency dependency) ->
-        {
-            String path = dependency.getLocalPath();
-            if (path == null) {
-                return dependency;
-            }
-            return loadLicense(licenseMap, userSettings, globalSettings, dependency);
-        };
+            Optional.ofNullable(dependency.getLocalPath())
+                .map(it -> loadLicense(licenseMap, userSettings, globalSettings, dependency))
+                .orElse(dependency);
     }
 
-    private Dependency loadLicense(Map<Pattern, String> licenseMap, String userSettings, String globalSettings,
+    private Dependency loadLicense(Map<String, String> licenseMap, String userSettings, String globalSettings,
                                    Dependency dependency) {
         String path = dependency.getLocalPath();
         int lastDotIndex = path.lastIndexOf('.');
@@ -201,15 +206,15 @@ public class MavenDependencyScanner implements Scanner {
         return dependency;
     }
 
-    private Dependency licenseMatcher(Map<Pattern, String> licenseMap, Dependency dependency, License license) {
+    private Dependency licenseMatcher(Map<String, String> licenseMap, Dependency dependency, License license) {
         String licenseName = license.getName();
         if (StringUtils.isBlank(licenseName)) {
             LOGGER.info("Dependency '{}' has no license set.", dependency.getName());
             return dependency;
         }
 
-        for (Entry<Pattern, String> entry : licenseMap.entrySet()) {
-            if (entry.getKey().matcher(licenseName).matches()) {
+        for (Entry<String, String> entry : licenseMap.entrySet()) {
+            if (licenseName.matches(entry.getKey())) {
                 dependency.setLicense(entry.getValue());
                 return dependency;
             }

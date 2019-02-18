@@ -20,45 +20,34 @@ import org.slf4j.LoggerFactory;
 import at.porscheinformatik.sonarqube.licensecheck.Dependency;
 import at.porscheinformatik.sonarqube.licensecheck.interfaces.Scanner;
 
-public class PackageJsonDependencyScanner implements Scanner
-{
+public class PackageJsonDependencyScanner implements Scanner {
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageJsonDependencyScanner.class);
 
     @Override
-    public List<Dependency> scan(File file)
-    {
+    public List<Dependency> scan(File file) {
         File packageJsonFile = new File(file, "package.json");
 
-        if (packageJsonFile.exists())
-        {
+        if (packageJsonFile.exists()) {
             try (InputStream fis = new FileInputStream(packageJsonFile);
-                JsonReader jsonReader = Json.createReader(fis))
-            {
+                 JsonReader jsonReader = Json.createReader(fis)) {
                 JsonObject jsonObject = jsonReader.readObject();
                 JsonObject jsonObjectDependencies = jsonObject.getJsonObject("dependencies");
-                if (jsonObjectDependencies != null)
-                {
+                if (jsonObjectDependencies != null) {
                     return dependencyParser(jsonObjectDependencies, packageJsonFile);
                 }
-                jsonReader.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 LOGGER.error("Error reading package.json", e);
             }
         }
         return Collections.emptyList();
     }
 
-    private List<Dependency> dependencyParser(JsonObject jsonDependencies, File packageJsonFile)
-    {
+    private List<Dependency> dependencyParser(JsonObject jsonDependencies, File packageJsonFile) {
         List<Dependency> dependencies = new ArrayList<>();
 
         File nodeModulesFolder = new File(packageJsonFile.getParentFile(), "node_modules");
-        if (nodeModulesFolder.exists() && nodeModulesFolder.isDirectory())
-        {
-            for (String key : jsonDependencies.keySet())
-            {
+        if (nodeModulesFolder.exists() && nodeModulesFolder.isDirectory()) {
+            for (String key : jsonDependencies.keySet()) {
                 moduleCheck(nodeModulesFolder, key, dependencies);
             }
         }
@@ -66,48 +55,41 @@ public class PackageJsonDependencyScanner implements Scanner
         return dependencies;
     }
 
-    private static void moduleCheck(File nodeModulesFolder, String identifier, List<Dependency> dependencies)
-    {
+    private static void moduleCheck(File nodeModulesFolder, String identifier, List<Dependency> dependencies) {
         File moduleFolder = new File(nodeModulesFolder, identifier);
 
-        if (moduleFolder.exists() && moduleFolder.isDirectory())
-        {
-            File packageFile = new File(moduleFolder, "package.json");
+        if (!moduleFolder.exists() || !moduleFolder.isDirectory()) {
+            return;
+        }
+        File packageFile = new File(moduleFolder, "package.json");
 
-            try (InputStream fis = new FileInputStream(packageFile); JsonReader jsonReader = Json.createReader(fis))
-            {
-                JsonObject jsonObject = jsonReader.readObject();
-                if (jsonObject != null)
-                {
-                    String license = null;
-                    if (jsonObject.containsKey("license"))
-                    {
-                        license = jsonObject.getString("license");
-                    }
-                    else if (jsonObject.containsKey("licenses"))
-                    {
-                        JsonArray licenses = jsonObject.getJsonArray("licenses");
-                        if (licenses.size() > 0)
-                        {
-                            license = licenses.getJsonObject(0).getString("type");
-                        }
-                    }
-
-                    if (license != null)
-                    {
-                        dependencies.add(new Dependency(identifier, jsonObject.getString("version"), license));
-                    }
-                }
-                jsonReader.close();
+        try (InputStream fis = new FileInputStream(packageFile); JsonReader jsonReader = Json.createReader(fis)) {
+            JsonObject jsonObject = jsonReader.readObject();
+            if (jsonObject == null) {
+                return;
             }
-            catch (FileNotFoundException e)
-            {
-                LOGGER.error("Could not find package.json", e);
+            String license = getLicenseString(jsonObject);
+            if (license != null) {
+                dependencies.add(new Dependency(identifier, jsonObject.getString("version"), license));
             }
-            catch (Exception e)
-            {
-                LOGGER.error("Error adding dependency " + identifier, e);
-            }
+        } catch (FileNotFoundException e) {
+            LOGGER.error("Could not find package.json", e);
+        } catch (Exception e) {
+            LOGGER.error("Error adding dependency " + identifier, e);
         }
     }
+
+    private static String getLicenseString(JsonObject jsonObject) {
+        String license = null;
+        if (jsonObject.containsKey("license")) {
+            license = jsonObject.getString("license");
+        } else if (jsonObject.containsKey("licenses")) {
+            JsonArray licenses = jsonObject.getJsonArray("licenses");
+            if (licenses.isEmpty()) {
+                license = licenses.getJsonObject(0).getString("type");
+            }
+        }
+        return license;
+    }
+
 }

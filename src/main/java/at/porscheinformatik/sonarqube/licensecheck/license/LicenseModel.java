@@ -41,10 +41,6 @@ public class LicenseModel {
         return !unmatched.isEmpty();
     }
 
-    public void setUnmatched(Set<String> unmatched) {
-        this.unmatched = unmatched;
-    }
-
     public boolean isEmpty() {
         return getUsedLicenses().isEmpty();
     }
@@ -65,10 +61,6 @@ public class LicenseModel {
             ", models=" + models +
             ", operator=" + operator +
             '}';
-    }
-
-    public void addAllLicenses(List<License> and) {
-        this.licenses.addAll(and);
     }
 
     public void addUnmatched(String license) {
