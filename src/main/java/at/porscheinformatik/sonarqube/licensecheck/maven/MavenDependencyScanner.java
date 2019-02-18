@@ -59,7 +59,8 @@ public class MavenDependencyScanner implements Scanner {
         LOGGER.info("Module path is: {}", moduleDir.getPath());
         try (final Stream<Path> pathStream = Files.walk(moduleDir.toPath())) {
             List<Path> poms = pathStream.filter(path -> path.endsWith(POM_FILENAME)).collect(Collectors.toList());
-            if (poms.size() != 1) {
+            final boolean singlePom = poms.size() == 1;
+            if (!singlePom) {
                 final Optional<Path> path = selectParent(poms);
                 if (path.isPresent()) {
                     poms = Collections.singletonList(path.get());
@@ -68,7 +69,7 @@ public class MavenDependencyScanner implements Scanner {
             return poms
                 .stream()
                 .peek(path -> LOGGER.info("Reading pom {}", path))
-                .flatMap(path -> readDependencyList(path.toFile(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
+                .flatMap(path -> readDependencyList(path.toFile(), commandLineArgs.userSettings, commandLineArgs.globalSettings, singlePom))
                 .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
                 .map(this::mapMavenDependencyToLicense)
                 .collect(Collectors.toList());
@@ -101,13 +102,18 @@ public class MavenDependencyScanner implements Scanner {
         return null;
     }
 
-    private Stream<Dependency> readDependencyList(File moduleDir, String userSettings, String globalSettings) {
+    private Stream<Dependency> readDependencyList(File moduleDir, String userSettings, String globalSettings, boolean singlePom) {
         Path tempFile = createTempFile();
         if (tempFile == null) {
             return Stream.empty();
         }
 
-        InvocationRequest request = buildInvocationRequest(moduleDir, userSettings, globalSettings, Arrays.asList("install", "dependency:list"), properties -> {
+        final List<String> targets = new ArrayList<>();
+        if(!singlePom){
+            targets.add("install");
+        }
+        targets.add("dependency:list");
+        InvocationRequest request = buildInvocationRequest(moduleDir, userSettings, globalSettings, targets, properties -> {
             properties.setProperty("outputFile", tempFile.toAbsolutePath().toString());
             properties.setProperty("outputAbsoluteArtifactFilename", "true");
             properties.setProperty("includeScope", "runtime"); // only runtime (scope compile + runtime)
@@ -116,7 +122,8 @@ public class MavenDependencyScanner implements Scanner {
         });
 
         Invoker invoker = new DefaultInvoker();
-        invoker.setOutputHandler(LOGGER::debug); // Push maven output to debug if available
+        invoker.setOutputHandler(LOGGER::info); // Push maven output to debug if available
+        invoker.setErrorHandler(LOGGER::error);
 
         try {
             LOGGER.debug("Attempting to execute {}", request);
@@ -125,7 +132,7 @@ public class MavenDependencyScanner implements Scanner {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Could not get dependency list via maven", result.getExecutionException());
                 } else {
-                    LOGGER.warn("Could not get dependency list via maven {}", result.getExecutionException().getMessage());
+                    LOGGER.warn("Could not get dependency list via maven {}", Optional.ofNullable(result.getExecutionException()).map(Exception::getMessage).orElse("[could not get error]"));
                 }
             }
 

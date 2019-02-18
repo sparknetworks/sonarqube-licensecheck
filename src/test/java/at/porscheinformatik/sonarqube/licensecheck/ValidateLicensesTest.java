@@ -1,6 +1,7 @@
 package at.porscheinformatik.sonarqube.licensecheck;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -13,9 +14,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.sonar.api.batch.fs.internal.DefaultInputModule;
 import org.sonar.api.batch.fs.internal.DefaultInputProject;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -29,30 +30,26 @@ import at.porscheinformatik.sonarqube.licensecheck.license.LicenseService;
 import org.sonar.api.internal.google.common.io.Files;
 import org.sonar.api.scanner.fs.InputProject;
 
-public class ValidateLicensesTest
-{
+public class ValidateLicensesTest {
     private static final License APACHE_LICENSE = new License("Apache-2.0", "Apache-2.0", true);
     private ValidateLicenses validateLicenses;
 
     @Before
-    public void setup()
-    {
+    public void setup() {
         final LicenseService licenseService = mock(LicenseService.class);
         when(licenseService.getLicenses()).thenReturn(Arrays.asList(new License("MIT", "MIT", false),
             new License("LGPL is fantastic", "LGPL-2.0", true), APACHE_LICENSE, new License("Public Domain", "PDL", true)));
         validateLicenses = new ValidateLicenses(licenseService);
     }
 
-    private SensorContextTester createContext()
-    {
+    private SensorContextTester createContext() {
         SensorContextTester context = SensorContextTester.create(Files.createTempDir());
 
         return context;
     }
 
     @Test
-    public void licenseNotAllowed()
-    {
+    public void licenseNotAllowed() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "MIT")), context);
@@ -62,52 +59,47 @@ public class ValidateLicensesTest
     }
 
     @Test
-    public void licenseAllowed()
-    {
+    public void licenseAllowed() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(
             deps(new Dependency("thing", "1.0", "Apache-2.0"), new Dependency("another", "2.0", "Apache-2.0")),
             context);
-        assertThat(context.allIssues().isEmpty(), is(true));
+        assertThat(context.allIssues(), empty());
     }
 
     //  (LGPL OR Apache-2.0) AND (LGPL OR Apache-2.0)    
     @Test
-    public void checkSpdxOrCombination()
-    {
+    public void checkSpdxOrCombination() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(deps(new Dependency("another", "2.0", "(LGPL-2.0 OR Apache-2.0 OR Public Domain)"),
             new Dependency("thing", "1.0", "(MIT OR Apache-2.0)")), context);
 
-        assertThat(context.allIssues().isEmpty(), is(true));
+        assertThat(context.allIssues(), empty());
     }
 
     @Test
-    public void checkSpdxSeveralOrCombination()
-    {
+    public void checkSpdxSeveralOrCombination() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(
             deps(new Dependency("thing", "1.0", "(Apache-2.0 OR MIT OR Apache-2.0 OR LGPL-2.0)")), context);
 
-        assertThat(context.allIssues().isEmpty(), is(true));
+        assertThat(context.allIssues(), empty());
     }
 
     @Test
-    public void checkSpdxAndCombination()
-    {
+    public void checkSpdxAndCombination() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(LGPL-2.0 AND Apache-2.0)")), context);
 
-        assertThat(context.allIssues().isEmpty(), is(true));
+        assertThat(context.allIssues(), empty());
     }
 
     @Test
-    public void checkSpdxAndCombinationNotAllowed()
-    {
+    public void checkSpdxAndCombinationNotAllowed() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(
@@ -118,8 +110,7 @@ public class ValidateLicensesTest
     }
 
     @Test
-    public void checkSpdxAndCombinationNotFound()
-    {
+    public void checkSpdxAndCombinationNotFound() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(Apache-2.0 AND Apache-1.1 AND Invalid-3.1)")), context);
@@ -128,20 +119,18 @@ public class ValidateLicensesTest
 
     //  LGPL OR Apache-2.0 AND MIT
     @Test
-    public void checkSpdxOrAndCombination()
-    {
+    public void checkSpdxOrAndCombination() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "(LGPL-2.0 OR (Apache-2.0 AND MIT))")),
             context);
 
-        assertThat(context.allIssues().isEmpty(), is(true));
+        assertThat(context.allIssues(), empty());
     }
 
     @Test
-    public void licenseNull()
-    {
-        SensorContextTester context = createContext();;
+    public void licenseNull() {
+        SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", null)), context);
 
@@ -149,8 +138,7 @@ public class ValidateLicensesTest
     }
 
     @Test
-    public void licenseUnknown()
-    {
+    public void licenseUnknown() {
         SensorContextTester context = createContext();
 
         validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", "Mamamia")), context);
@@ -159,9 +147,7 @@ public class ValidateLicensesTest
     }
 
     @Test
-    public void getUsedLicenses()
-    {
-        final InputProject inputProject = mock(InputProject.class);
+    public void getUsedLicenses() {
         assertThat(validateLicenses.getUsedLicenses(deps()).size(), is(0));
 
         Set<License> usedLicensesApache = validateLicenses.getUsedLicenses(
@@ -171,8 +157,7 @@ public class ValidateLicensesTest
         assertThat(usedLicensesApache, CoreMatchers.hasItem(APACHE_LICENSE));
     }
 
-    private static Set<Dependency> deps(Dependency... dependencies)
-    {
+    private static Set<Dependency> deps(Dependency... dependencies) {
         final Set<Dependency> dependencySet = new HashSet<>();
         Collections.addAll(dependencySet, dependencies);
         return dependencySet;

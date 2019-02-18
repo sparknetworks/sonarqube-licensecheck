@@ -1,6 +1,6 @@
 package at.porscheinformatik.sonarqube.licensecheck.gradle;
 
-import org.apache.commons.io.FileUtils;
+import at.porscheinformatik.sonarqube.licensecheck.ProjectResolver;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +33,14 @@ public class GradleProjectResolver {
     }
 
     public static File prepareGradleProject() throws IOException {
-        File projectRoot;
-        projectRoot = new File("target/testProject");
-        FileUtils.deleteDirectory(projectRoot);
-        projectRoot.mkdirs();
-        File buildGradleSrc = new File(GradleProjectResolver.class.getClassLoader().getResource("gradle/build.gradle").getPath()).getParentFile();
-        FileUtils.copyDirectory(buildGradleSrc, projectRoot);
-        File gradlewTrg = new File(projectRoot, "gradlew");
-        Files.setPosixFilePermissions(gradlewTrg.toPath(), PosixFilePermissions.fromString("rwxr-xr-x"));
-        return projectRoot.getAbsoluteFile();
+        return ProjectResolver.prepareProject(() -> new File(GradleProjectResolver.class.getClassLoader().getResource("gradle/build.gradle").getPath()).getParentFile(), (projectRoot) -> {
+            File gradlewTrg = new File(projectRoot, "gradlew");
+            try {
+                Files.setPosixFilePermissions(gradlewTrg.toPath(), PosixFilePermissions.fromString("rwxr-xr-x"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
+
 }

@@ -2,14 +2,19 @@ package at.porscheinformatik.sonarqube.licensecheck.maven;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import at.porscheinformatik.sonarqube.licensecheck.internal.InternalDependenciesService;
 import org.apache.commons.cli.ParseException;
@@ -33,35 +38,29 @@ public class MavenDependencyScannerTest {
 
         Map<String, String> licenseMap = new HashMap<>();
         licenseMap.put(".*Apache.*2.*", "Apache-2.0");
-        MavenLicenseService licenseService = Mockito.mock(MavenLicenseService.class);
+        MavenLicenseService licenseService = mock(MavenLicenseService.class);
         when(licenseService.getLicenseMap()).thenReturn(licenseMap);
-        final InternalDependenciesService internalDependenciesService = Mockito.mock(InternalDependenciesService.class);
+        final InternalDependenciesService internalDependenciesService = mock(InternalDependenciesService.class);
         when(internalDependenciesService.getInternalDependencyRegexes()).thenReturn(Collections.emptyList());
-        final MavenDependencyService dependencyService = Mockito.mock(MavenDependencyService.class);
+        final MavenDependencyService dependencyService = mock(MavenDependencyService.class);
         when(dependencyService.getMavenDependencies()).thenReturn(Arrays.asList(new MavenDependency("org.apache.*", "Apache-2.0")));
         Scanner scanner = new MavenDependencyScanner(licenseService, dependencyService, internalDependenciesService);
 
-        // -
         List<Dependency> dependencies = scanner.scan(moduleDir);
 
-        assertThat(dependencies.size(), Matchers.greaterThan(0));
+        assertThat(dependencies.size(), greaterThan(0));
 
-        // -
-        for (Dependency dep : dependencies) {
-            if ("org.apache.commons:commons-lang3".equals(dep.getName())) {
-                assertThat(dep.getLicense(), is("Apache-2.0"));
-            } else if ("org.codehaus.plexus:plexus-utils".equals(dep.getName())) {
-                assertThat(dep.getLicense(), is("Apache-2.0"));
-            }
-        }
+        final Map<String, Dependency> dependencyMap = dependencies.stream().collect(Collectors.toMap(Dependency::getName, it -> it, (a, b) -> a));
+        assertThat(dependencyMap.get("org.apache.commons:commons-lang3").getLicense(), is("Apache-2.0"));
+        assertThat(dependencyMap.get("org.codehaus.plexus:plexus-utils").getLicense(), is("Apache-2.0"));
     }
 
     @Test
     public void testNullMavenProjectDependencies() throws IOException {
-        MavenLicenseService licenseService = Mockito.mock(MavenLicenseService.class);
-        MavenDependencyService dependencyService = Mockito.mock(MavenDependencyService.class);
+        MavenLicenseService licenseService = mock(MavenLicenseService.class);
+        MavenDependencyService dependencyService = mock(MavenDependencyService.class);
 
-        final InternalDependenciesService internalDependenciesService = Mockito.mock(InternalDependenciesService.class);
+        final InternalDependenciesService internalDependenciesService = mock(InternalDependenciesService.class);
         when(internalDependenciesService.getInternalDependencyRegexes()).thenReturn(Collections.emptyList());
         Scanner scanner = new MavenDependencyScanner(licenseService, dependencyService, internalDependenciesService);
 
@@ -69,7 +68,7 @@ public class MavenDependencyScannerTest {
         moduleDir.deleteOnExit();
         List<Dependency> dependencies = scanner.scan(moduleDir);
 
-        assertThat(dependencies.size(), is(0));
+        assertThat(dependencies, empty());
     }
 
     @Test

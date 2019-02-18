@@ -2,6 +2,7 @@ package at.porscheinformatik.sonarqube.licensecheck.gradle;
 
 import org.apache.maven.model.License;
 import org.apache.maven.model.Model;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static at.porscheinformatik.sonarqube.licensecheck.gradle.GradleProjectResolver.prepareGradleProject;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class GradlePomResolverTest {
 
@@ -38,10 +43,7 @@ public class GradlePomResolverTest {
         pomLicense.setUrl("http://www.apache.org/licenses/LICENSE-2.0.txt");
         pomLicense.setDistribution("repo");
         pom.setLicenses(Collections.singletonList(pomLicense));
-
-        Assert.assertNotNull(poms.stream().filter(p -> {
-            return p.getArtifactId().equals("spock-core")
-                && p.getLicenses().get(0).getName().equals("The Apache Software License, Version 2.0");
-        }).findFirst().orElse(null));
+        assertTrue(poms.stream().anyMatch(p -> p.getArtifactId().equals("spock-core")
+            && p.getLicenses().get(0).getName().equals("The Apache Software License, Version 2.0")));
     }
 }

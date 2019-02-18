@@ -12,6 +12,8 @@ import org.mockito.Mockito;
 import java.io.IOException;
 
 import static at.porscheinformatik.sonarqube.licensecheck.gradle.TestDataBuilder.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -32,7 +34,7 @@ public class PomDependenyMapperTest {
 
         Dependency expected = new Dependency("com.sample:my-artifact", "1.0", "The Apache Software License 2.0");
 
-        Assert.assertEquals(expected, dependency);
+        assertThat(dependency, is(expected));
     }
 
     @Test
@@ -45,7 +47,7 @@ public class PomDependenyMapperTest {
 
         Dependency expected = new Dependency("com.sample:my-artifact", "1.0", "Apache-2.0");
 
-        Assert.assertEquals(expected, dependency);
+        assertThat(dependency, is(expected));
     }
 
     @Test
@@ -58,7 +60,7 @@ public class PomDependenyMapperTest {
 
         Dependency expected = new Dependency("com.sample:my-artifact", "1.0", "The Apache Software License 2.0");
 
-        Assert.assertEquals(expected, dependency);
+        assertThat(dependency, is(expected));
     }
 
     @Test
@@ -72,6 +74,6 @@ public class PomDependenyMapperTest {
 
         Dependency expected = new Dependency("com.sample:my-artifact", "1.1", "The Apache Software License 2.0");
 
-        Assert.assertEquals(expected, dependency);
+        assertThat(dependency, is(expected));
     }
 }
