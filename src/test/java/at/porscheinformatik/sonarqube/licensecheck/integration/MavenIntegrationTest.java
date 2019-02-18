@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class MavenIntegrationTest {
@@ -51,8 +53,8 @@ public class MavenIntegrationTest {
 
         List<Dependency> dependencies = scanner.scan(projectRoot);
 
-        Assert.assertEquals(5, dependencies.size());
-        Assert.assertTrue(dependencies.contains(
+        assertEquals(5, dependencies.size());
+        assertTrue(dependencies.contains(
             new Dependency("org.spockframework:spock-core",
                 "1.1-groovy-2.4",
                 "Apache-2.0")));

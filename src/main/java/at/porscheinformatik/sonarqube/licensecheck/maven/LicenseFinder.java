@@ -40,7 +40,12 @@ public class LicenseFinder {
             }
 
         } catch (Exception e) {
-            LOGGER.warn("Could not parse Maven POM " + filePath, e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Could not parse Maven POM " + filePath, e);
+            } else {
+                LOGGER.warn("Could not parse Maven POM {}: {}", filePath, e.getMessage());
+            }
+
             return Collections.emptyList();
         }
     }

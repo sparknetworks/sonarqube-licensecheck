@@ -10,3 +10,4 @@ package.json
 *.iml
 package-lock.json
 build
+src/test/resources/**/.gradle

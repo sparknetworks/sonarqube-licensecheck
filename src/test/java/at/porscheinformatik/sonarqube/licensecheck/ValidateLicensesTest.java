@@ -39,7 +39,7 @@ public class ValidateLicensesTest
     {
         final LicenseService licenseService = mock(LicenseService.class);
         when(licenseService.getLicenses()).thenReturn(Arrays.asList(new License("MIT", "MIT", false),
-            new License("LGPL is fantastic", "LGPL-2.0", true), APACHE_LICENSE));
+            new License("LGPL is fantastic", "LGPL-2.0", true), APACHE_LICENSE, new License("Public Domain", "PDL", true)));
         validateLicenses = new ValidateLicenses(licenseService);
     }
 
@@ -78,7 +78,7 @@ public class ValidateLicensesTest
     {
         SensorContextTester context = createContext();
 
-        validateLicenses.validateLicenses(deps(new Dependency("another", "2.0", "(LGPL-2.0 OR Apache-2.0)"),
+        validateLicenses.validateLicenses(deps(new Dependency("another", "2.0", "(LGPL-2.0 OR Apache-2.0 OR Public Domain)"),
             new Dependency("thing", "1.0", "(MIT OR Apache-2.0)")), context);
 
         assertThat(context.allIssues().isEmpty(), is(true));

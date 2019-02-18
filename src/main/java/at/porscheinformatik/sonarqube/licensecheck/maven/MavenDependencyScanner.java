@@ -6,6 +6,8 @@ import at.porscheinformatik.sonarqube.licensecheck.internal.InternalDependencies
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependency;
 import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
 import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
+import at.porscheinformatik.sonarqube.licensecheck.spdx.LicenseProvider;
+import at.porscheinformatik.sonarqube.licensecheck.spdx.SpdxLicense;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.model.License;
 import org.apache.maven.model.Model;
@@ -56,9 +58,15 @@ public class MavenDependencyScanner implements Scanner {
         MavenSettings commandLineArgs = getCommandLineArgs();
         LOGGER.info("Module path is: {}", moduleDir.getPath());
         try (final Stream<Path> pathStream = Files.walk(moduleDir.toPath())) {
-            return pathStream.filter(path -> path.endsWith(POM_FILENAME))
-                // Select the parent pom and make sure we run it recursively so it adds all the child deps.
-                .filter(this::selectParent)
+            List<Path> poms = pathStream.filter(path -> path.endsWith(POM_FILENAME)).collect(Collectors.toList());
+            if (poms.size() != 1) {
+                final Optional<Path> path = selectParent(poms);
+                if (path.isPresent()) {
+                    poms = Collections.singletonList(path.get());
+                }
+            }
+            return poms
+                .stream()
                 .peek(path -> LOGGER.info("Reading pom {}", path))
                 .flatMap(path -> readDependencyList(path.toFile(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
                 .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
@@ -72,16 +80,25 @@ public class MavenDependencyScanner implements Scanner {
 
     }
 
-    private boolean selectParent(Path path) {
+    private Optional<Path> selectParent(List<Path> paths) {
+        final List<Model> models = paths.stream()
+            .map(this::toModel).collect(Collectors.toList());
+        List<String> modules = models.stream()
+            .filter(Objects::nonNull).map(Model::getModules)
+            .flatMap(List::stream).collect(Collectors.toList());
+        return models.stream()
+            .filter(it -> it.getParent() == null || !modules.contains(it.getArtifactId()))
+            .findFirst().map(Model::getPomFile).map(File::toPath);
+    }
+
+    private Model toModel(Path path) {
         try (final FileReader reader = new FileReader(path.toFile())) {
             final Model model = new MavenXpp3Reader().read(reader);
-            if (model.getParent() == null) {
-                return true;
-            }
+            return model;
         } catch (IOException | XmlPullParserException e) {
             LOGGER.warn("Could not read pom information");
         }
-        return false;
+        return null;
     }
 
     private Stream<Dependency> readDependencyList(File moduleDir, String userSettings, String globalSettings) {
@@ -105,7 +122,7 @@ public class MavenDependencyScanner implements Scanner {
             LOGGER.debug("Attempting to execute {}", request);
             InvocationResult result = invoker.execute(request);
             if (result.getExitCode() != 0) {
-                if(LOGGER.isDebugEnabled()){
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Could not get dependency list via maven", result.getExecutionException());
                 } else {
                     LOGGER.warn("Could not get dependency list via maven {}", result.getExecutionException().getMessage());
@@ -216,12 +233,17 @@ public class MavenDependencyScanner implements Scanner {
             LOGGER.info("Dependency '{}' has no license set.", dependency.getName());
             return dependency;
         }
+        // Use primarily the SpdxLicense list to identify licenses according to names if matching completely
+        final Optional<String> spdxLicense = LicenseProvider.getByNameOrIdentifier(licenseName).map(SpdxLicense::getName);
+        if (spdxLicense.isPresent()) {
+            dependency.setLicense(spdxLicense.get());
+            return dependency;
+        }
 
-        for (Entry<String, String> entry : licenseMap.entrySet()) {
-            if (licenseName.matches(entry.getKey())) {
-                dependency.setLicense(entry.getValue());
-                return dependency;
-            }
+        final Optional<String> matchedLicense = licenseMap.entrySet().stream().filter(it -> licenseName.matches(it.getKey())).map(Entry::getValue).findFirst();
+        if (matchedLicense.isPresent()) {
+            dependency.setLicense(matchedLicense.get());
+            return dependency;
         }
 
         LOGGER.info("No licenses found for '{}'", licenseName);
