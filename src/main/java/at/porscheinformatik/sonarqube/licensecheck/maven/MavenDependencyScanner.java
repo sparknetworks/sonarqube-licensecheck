@@ -93,8 +93,10 @@ public class MavenDependencyScanner implements Scanner {
     }
 
     private Model toModel(Path path) {
-        try (final FileReader reader = new FileReader(path.toFile())) {
+        final File pomFile = path.toFile();
+        try (final FileReader reader = new FileReader(pomFile)) {
             final Model model = new MavenXpp3Reader().read(reader);
+            model.setPomFile(pomFile);
             return model;
         } catch (IOException | XmlPullParserException e) {
             LOGGER.warn("Could not read pom information");

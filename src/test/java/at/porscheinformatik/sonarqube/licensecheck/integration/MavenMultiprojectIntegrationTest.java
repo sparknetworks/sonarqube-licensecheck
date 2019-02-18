@@ -48,7 +48,7 @@ public class MavenMultiprojectIntegrationTest {
 
         List<Dependency> dependencies = scanner.scan(projectRoot);
 
-        assertThat(dependencies, hasSize(15));
+        assertThat(dependencies, hasSize(8));
         assertThat(dependencies, hasItem(
             new Dependency("org.spockframework:spock-core",
                 "1.1-groovy-2.4",
