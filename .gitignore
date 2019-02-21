@@ -3,7 +3,7 @@
 .factorypath
 .settings/
 target/
-/node_modules/
+node_modules/
 node/
 .idea/
 *.iml
