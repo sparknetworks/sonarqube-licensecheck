@@ -1,45 +1,37 @@
 package at.porscheinformatik.sonarqube.licensecheck;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.Matchers.empty;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import at.porscheinformatik.sonarqube.licensecheck.model.Dependency;
+import at.porscheinformatik.sonarqube.licensecheck.model.LicenseDefinition;
+import at.porscheinformatik.sonarqube.licensecheck.service.LicenseDefinitionService;
+import org.hamcrest.CoreMatchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.sonar.api.batch.sensor.internal.SensorContextTester;
+import org.sonar.api.batch.sensor.issue.Issue;
+import org.sonar.api.internal.google.common.io.Files;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.sonar.api.batch.fs.internal.DefaultInputModule;
-import org.sonar.api.batch.fs.internal.DefaultInputProject;
-import org.sonar.api.batch.sensor.SensorContext;
-import org.sonar.api.batch.sensor.internal.SensorContextTester;
-import org.sonar.api.batch.sensor.internal.SensorStorage;
-import org.sonar.api.batch.sensor.issue.Issue;
-import org.sonar.api.batch.sensor.issue.internal.DefaultIssue;
-
-import at.porscheinformatik.sonarqube.licensecheck.license.License;
-import at.porscheinformatik.sonarqube.licensecheck.license.LicenseService;
-import org.sonar.api.internal.google.common.io.Files;
-import org.sonar.api.scanner.fs.InputProject;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.empty;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ValidateLicensesTest {
-    private static final License APACHE_LICENSE = new License("Apache-2.0", "Apache-2.0", true);
+    private static final LicenseDefinition APACHE_LICENSE = new LicenseDefinition("Apache-2.0", "Apache-2.0", true);
     private ValidateLicenses validateLicenses;
 
     @Before
     public void setup() {
-        final LicenseService licenseService = mock(LicenseService.class);
-        when(licenseService.getLicenses()).thenReturn(Arrays.asList(new License("MIT", "MIT", false),
-            new License("LGPL is fantastic", "LGPL-2.0", true), APACHE_LICENSE, new License("Public Domain", "PDL", true)));
-        validateLicenses = new ValidateLicenses(licenseService);
+        final LicenseDefinitionService licenseDefinitionService = mock(LicenseDefinitionService.class);
+        when(licenseDefinitionService.getLicenses()).thenReturn(Arrays.asList(new LicenseDefinition("MIT", "MIT", false),
+            new LicenseDefinition("LGPL is fantastic", "LGPL-2.0", true), APACHE_LICENSE, new LicenseDefinition("Public Domain", "PDL", true)));
+        validateLicenses = new ValidateLicenses(licenseDefinitionService);
     }
 
     private SensorContextTester createContext() {
@@ -132,7 +124,7 @@ public class ValidateLicensesTest {
     public void licenseNull() {
         SensorContextTester context = createContext();
 
-        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", null)), context);
+        validateLicenses.validateLicenses(deps(new Dependency("thing", "1.0", (String) null)), context);
 
         assertThat(context.allIssues().toString(), containsString(LicenseCheckMetrics.LICENSE_CHECK_UNLISTED_KEY));
     }
@@ -150,7 +142,7 @@ public class ValidateLicensesTest {
     public void getUsedLicenses() {
         assertThat(validateLicenses.getUsedLicenses(deps()).size(), is(0));
 
-        Set<License> usedLicensesApache = validateLicenses.getUsedLicenses(
+        Set<LicenseDefinition> usedLicensesApache = validateLicenses.getUsedLicenses(
             deps(new Dependency("thing", "1.0", "Apache-2.0"), new Dependency("another", "2.0", "Apache-2.0")));
 
         assertThat(usedLicensesApache.size(), is(1));

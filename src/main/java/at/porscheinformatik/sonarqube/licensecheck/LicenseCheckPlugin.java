@@ -1,9 +1,6 @@
 package at.porscheinformatik.sonarqube.licensecheck;
 
-import at.porscheinformatik.sonarqube.licensecheck.internal.InternalDependenciesService;
-import at.porscheinformatik.sonarqube.licensecheck.license.LicenseService;
-import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
-import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
+import at.porscheinformatik.sonarqube.licensecheck.service.*;
 import at.porscheinformatik.sonarqube.licensecheck.spdx.LicenseProvider;
 import org.sonar.api.Plugin;
 import org.sonar.api.PropertyType;
@@ -37,10 +34,11 @@ public class LicenseCheckPlugin implements Plugin {
             LicenseCheckPageDefinition.class,
             LicenseCheckMeasureComputer.class,
             LicenseCheckRulesDefinition.class,
-            LicenseService.class,
-            MavenDependencyService.class,
-            MavenLicenseService.class,
+            LicenseDefinitionService.class,
+            ArtifactDependencyService.class,
+            LicenseMatcherService.class,
             InternalDependenciesService.class,
+            LicenseMappingService.class,
             PropertyDefinition.builder(LicenseCheckPropertyKeys.ACTIVATION_KEY)
                 .category(LICENSE_CHECK)
                 .name("Activate")

@@ -1,18 +1,19 @@
 package at.porscheinformatik.sonarqube.licensecheck;
 
+import at.porscheinformatik.sonarqube.licensecheck.model.Dependency;
+import org.junit.Test;
+
+import java.util.List;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertThat;
 
-import java.util.List;
-
-import org.junit.Test;
-
 public class DependencyTest {
     private static final String DEPENDENCIES_JSON =
-        "[{\"name\":\"another\",\"version\":\"2.1.0\",\"license\":\"MIT\"}," +
-            "{\"name\":\"library\",\"version\":\"1.0.0\",\"license\":\"Apache-2.0\"}]";
+        "[{\"name\":\"another\",\"version\":\"2.1.0\",\"license\":\"MIT\",\"licenses\":[\"MIT\"]}" +
+            ",{\"name\":\"library\",\"version\":\"1.0.0\",\"license\":\"Apache-2.0\",\"licenses\":[\"Apache-2.0\"]}]";
     private static final Dependency DEP1 = new Dependency("another", "2.1.0", "MIT");
     private static final Dependency DEP2 = new Dependency("library", "1.0.0", "Apache-2.0");
 

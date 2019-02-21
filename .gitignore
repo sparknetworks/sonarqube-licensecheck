@@ -3,9 +3,8 @@
 .factorypath
 .settings/
 target/
-node_modules/
+/node_modules/
 node/
-package.json
 .idea/
 *.iml
 package-lock.json

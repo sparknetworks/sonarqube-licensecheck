@@ -1,14 +1,12 @@
 package at.porscheinformatik.sonarqube.licensecheck;
 
-import at.porscheinformatik.sonarqube.licensecheck.gradle.GradleDependencyScanner;
 import at.porscheinformatik.sonarqube.licensecheck.interfaces.Scanner;
-import at.porscheinformatik.sonarqube.licensecheck.internal.InternalDependenciesService;
 import at.porscheinformatik.sonarqube.licensecheck.maven.MavenDependencyScanner;
-import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
-import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
 import at.porscheinformatik.sonarqube.licensecheck.npm.PackageJsonDependencyScanner;
+import at.porscheinformatik.sonarqube.licensecheck.service.JsonDependencyParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.config.Configuration;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,38 +18,23 @@ class ScannerResolver {
     private ScannerResolver() {
     }
 
-    static Scanner[] resolveScanners(File baseDir) {
-        return resolveScanners(baseDir, null, null, null);
-    }
-
-    static Scanner[] resolveScanners(File baseDir, MavenLicenseService mavenLicenseService, MavenDependencyService mavenDependencyService, InternalDependenciesService internalDependenciesService) {
+    static Scanner[] resolveScanners(File baseDir, Configuration configuration) {
         List<Scanner> scanners = new ArrayList<Scanner>();
 
-        if (hasPomXml(baseDir) && mavenLicenseService != null && mavenDependencyService != null) {
+        if (hasPomXml(baseDir)) {
             LOGGER.info("Found pom.xml in baseDir -> activating maven dependency scan.");
-            scanners.add(new MavenDependencyScanner(mavenLicenseService, mavenDependencyService, internalDependenciesService));
-        } else if (hasBuildGradle(baseDir)) {
-            LOGGER.info("Found build.gradle in baseDir -> activating gradle dependency scan.");
-            scanners.add(new GradleDependencyScanner(mavenLicenseService, mavenDependencyService));
-        } else {
-            LOGGER.warn("Found no pom.xml and no build.gradle in base dir: {}",  baseDir.getAbsolutePath());
+            scanners.add(new MavenDependencyScanner());
         }
 
         scanners.add(new PackageJsonDependencyScanner());
+        scanners.add(new JsonDependencyParser(configuration));
 
         Scanner[] scannerArray = new Scanner[scanners.size()];
         return scanners.toArray(scannerArray);
     }
 
     private static boolean hasPomXml(File baseDir) {
-        return hasFile("pom.xml", baseDir);
+        return new File(baseDir, "pom.xml").exists();
     }
 
-    private static boolean hasBuildGradle(File baseDir) {
-        return hasFile("build.gradle", baseDir);
-    }
-
-    private static boolean hasFile(String fileName, File dir) {
-        return new File(dir, fileName).exists();
-    }
 }

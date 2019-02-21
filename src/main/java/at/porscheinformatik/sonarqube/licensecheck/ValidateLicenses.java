@@ -1,7 +1,8 @@
 package at.porscheinformatik.sonarqube.licensecheck;
 
-import at.porscheinformatik.sonarqube.licensecheck.license.*;
 import at.porscheinformatik.sonarqube.licensecheck.maven.MavenDependencyScanner;
+import at.porscheinformatik.sonarqube.licensecheck.model.*;
+import at.porscheinformatik.sonarqube.licensecheck.service.LicenseDefinitionService;
 import at.porscheinformatik.sonarqube.licensecheck.spdx.LicenseProvider;
 import at.porscheinformatik.sonarqube.licensecheck.spdx.SpdxLicense;
 import org.apache.commons.lang3.StringUtils;
@@ -21,11 +22,11 @@ import java.util.stream.Collectors;
 @ScannerSide
 public class ValidateLicenses {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidateLicenses.class);
-    private final LicenseService licenseService;
+    private final LicenseDefinitionService licenseDefinitionService;
 
-    public ValidateLicenses(LicenseService licenseService) {
+    public ValidateLicenses(LicenseDefinitionService licenseDefinitionService) {
         super();
-        this.licenseService = licenseService;
+        this.licenseDefinitionService = licenseDefinitionService;
     }
 
     public LicenseValidationResult validateLicenses(Set<Dependency> dependencies, SensorContext context) {
@@ -41,12 +42,12 @@ public class ValidateLicenses {
         return result;
     }
 
-    public Set<License> getUsedLicenses(Set<Dependency> dependencies) {
-        Set<License> usedLicenseList = new TreeSet<>();
-        List<License> licenses = licenseService.getLicenses();
+    public Set<LicenseDefinition> getUsedLicenses(Set<Dependency> dependencies) {
+        Set<LicenseDefinition> usedLicenseList = new TreeSet<>();
+        List<LicenseDefinition> licenses = licenseDefinitionService.getLicenses();
 
         for (Dependency dependency : dependencies) {
-            for (License license : licenses) {
+            for (LicenseDefinition license : licenses) {
                 if (license.getIdentifier().equals(dependency.getLicense())) {
                     usedLicenseList.add(license);
                 }
@@ -56,29 +57,53 @@ public class ValidateLicenses {
     }
 
     private void checkForLicenses(SensorContext context, Dependency dependency, LicenseValidationResult result) {
-        List<License> licenses = licenseService.getLicenses();
+        List<LicenseDefinition> licenses = licenseDefinitionService.getLicenses();
         if (MavenDependencyScanner.INTERNAL_LICENSE.equals(dependency.getLicense())) {
             dependency.setStatus("Allowed");
             return;
         }
-        final LicenseModel licenseModel = constructModel(dependency.getLicense());
-        final List<License> usedLicenses = licenseModel.getUsedLicenses();
+        final LicenseModel licenseModel;
+        // If we do not have correct information about the operator between the licenses we should err on the side of caution and as such we define the operator to be an AND instead of an OR
+        if (dependency.getLicenses().size() > 1) {
+            licenseModel = modelFromListWithNoOperator(dependency);
+        } else {
+            licenseModel = constructModel(dependency.getLicense());
+        }
+        final List<LicenseDefinition> usedLicenses = licenseModel.getUsedLicenses();
         if (licenseModel.hasUnmatched()) {
             dependency.setStatus("Unknown");
             licenseNotFoundIssue(context, dependency, licenseModel.getUnmatched());
         } else if (!licenseModel.isAllowed(licenses)) {
             StringBuilder notAllowedLicensees = new StringBuilder();
-            for (License element : usedLicenses) {
+            for (LicenseDefinition element : usedLicenses) {
                 if (!element.getStatus()) {
                     notAllowedLicensees.append(element.getName()).append(" ");
                 }
             }
             dependency.setStatus("Forbidden");
+            LOGGER.debug("Disallowed license model: {}", licenseModel);
             licenseNotAllowedIssue(context, dependency, notAllowedLicensees);
         } else {
             dependency.setStatus("Allowed");
         }
+        dependency.setLicense(licenseModel.generateSpdxLicenseInfo());
         result.addAllLicenses(licenses.stream().filter(usedLicenses::contains).collect(Collectors.toList()));
+    }
+
+    private LicenseModel modelFromListWithNoOperator(Dependency dependency) {
+        LicenseModel licenseModel;
+        licenseModel = new LicenseModel();
+        licenseModel.setOperator(Operator.AND);
+        Set<String> licenseStrings = dependency.getLicenses();
+        Set<String> definitions = licenseStrings.stream()
+            .map(LicenseProvider::getByNameOrIdentifier)
+            .filter(Optional::isPresent)
+            .map(Optional::get).map(it -> it.getName() + it.getLicenseID())
+            .collect(Collectors.toSet());
+        if (definitions.size() != licenseStrings.size()) {
+            licenseStrings.stream().filter(it -> definitions.stream().noneMatch(def -> def.contains(it))).forEach(licenseModel::addUnmatched);
+        }
+        return licenseModel;
     }
 
 
@@ -116,7 +141,7 @@ public class ValidateLicenses {
     }
 
     private void addLicense(LicenseModel model, String licenseString) {
-        final Optional<License> optionalLicense = LicenseProvider.getByNameOrIdentifier(licenseString.trim()).map(SpdxLicense::toLicense);
+        final Optional<LicenseDefinition> optionalLicense = LicenseProvider.getByNameOrIdentifier(licenseString.trim()).map(SpdxLicense::toLicense);
         if (optionalLicense.isPresent()) {
             optionalLicense.ifPresent(model::addLicense);
         } else {

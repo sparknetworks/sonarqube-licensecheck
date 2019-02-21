@@ -1,13 +1,7 @@
 package at.porscheinformatik.sonarqube.licensecheck.maven;
 
-import at.porscheinformatik.sonarqube.licensecheck.Dependency;
 import at.porscheinformatik.sonarqube.licensecheck.interfaces.Scanner;
-import at.porscheinformatik.sonarqube.licensecheck.internal.InternalDependenciesService;
-import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependency;
-import at.porscheinformatik.sonarqube.licensecheck.mavendependency.MavenDependencyService;
-import at.porscheinformatik.sonarqube.licensecheck.mavenlicense.MavenLicenseService;
-import at.porscheinformatik.sonarqube.licensecheck.spdx.LicenseProvider;
-import at.porscheinformatik.sonarqube.licensecheck.spdx.SpdxLicense;
+import at.porscheinformatik.sonarqube.licensecheck.model.Dependency;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.model.License;
 import org.apache.maven.model.Model;
@@ -23,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -39,19 +32,6 @@ public class MavenDependencyScanner implements Scanner {
     public static final Pattern GLOBAL_SETTINGS_PATTERN = Pattern.compile("-(gs|-global-settings)");
     public static final String INTERNAL_LICENSE = "Internal (Own Code)";
     public static final String POM_FILENAME = "pom.xml";
-
-    private final MavenLicenseService mavenLicenseService;
-
-    private final MavenDependencyService mavenDependencyService;
-    private final InternalDependenciesService internalDependenciesService;
-
-    public MavenDependencyScanner(MavenLicenseService mavenLicenseService,
-                                  MavenDependencyService mavenDependencyService,
-                                  InternalDependenciesService internalDependenciesService) {
-        this.mavenLicenseService = mavenLicenseService;
-        this.mavenDependencyService = mavenDependencyService;
-        this.internalDependenciesService = internalDependenciesService;
-    }
 
     @Override
     public List<Dependency> scan(File moduleDir) {
@@ -70,11 +50,9 @@ public class MavenDependencyScanner implements Scanner {
                 .stream()
                 .peek(path -> LOGGER.info("Reading pom {}", path))
                 .flatMap(path -> readDependencyList(path.toFile(), commandLineArgs.userSettings, commandLineArgs.globalSettings, singlePom))
-                .map(this.loadLicenseFromPom(mavenLicenseService.getLicenseMap(), commandLineArgs.userSettings, commandLineArgs.globalSettings))
-                .map(this::mapMavenDependencyToLicense)
+                .map(this.loadLicenseFromPom(commandLineArgs.userSettings, commandLineArgs.globalSettings))
                 .collect(Collectors.toList());
         } catch (IOException e) {
-
             LOGGER.error("Could not read all child poms of the module: ", e);
         }
         return Collections.emptyList();
@@ -111,7 +89,7 @@ public class MavenDependencyScanner implements Scanner {
         }
 
         final List<String> targets = new ArrayList<>();
-        if(!singlePom){
+        if (!singlePom) {
             targets.add("install");
         }
         targets.add("dependency:list");
@@ -202,22 +180,22 @@ public class MavenDependencyScanner implements Scanner {
             String artifactId = matcher.group(2);
             String version = matcher.group(3);
             String path = matcher.group(4);
-            Dependency dependency = new Dependency(groupId + ":" + artifactId, version, null);
+            Dependency dependency = new Dependency(groupId + ":" + artifactId, version, (String) null);
             dependency.setLocalPath(path);
             return dependency;
         }
         return null;
     }
 
-    private Function<Dependency, Dependency> loadLicenseFromPom(Map<String, String> licenseMap, String userSettings,
+    private Function<Dependency, Dependency> loadLicenseFromPom(String userSettings,
                                                                 String globalSettings) {
         return (Dependency dependency) ->
             Optional.ofNullable(dependency.getLocalPath())
-                .map(it -> loadLicense(licenseMap, userSettings, globalSettings, dependency))
+                .map(it -> loadLicense(userSettings, globalSettings, dependency))
                 .orElse(dependency);
     }
 
-    private Dependency loadLicense(Map<String, String> licenseMap, String userSettings, String globalSettings,
+    private Dependency loadLicense(String userSettings, String globalSettings,
                                    Dependency dependency) {
         String path = dependency.getLocalPath();
         int lastDotIndex = path.lastIndexOf('.');
@@ -229,49 +207,7 @@ public class MavenDependencyScanner implements Scanner {
                 return dependency;
             }
 
-            for (License license : licenses) {
-                licenseMatcher(licenseMap, dependency, license);
-            }
-        }
-        return dependency;
-    }
-
-    private Dependency licenseMatcher(Map<String, String> licenseMap, Dependency dependency, License license) {
-        String licenseName = license.getName();
-        if (StringUtils.isBlank(licenseName)) {
-            LOGGER.info("Dependency '{}' has no license set.", dependency.getName());
-            return dependency;
-        }
-        // Use primarily the SpdxLicense list to identify licenses according to names if matching completely
-        final Optional<String> spdxLicense = LicenseProvider.getByNameOrIdentifier(licenseName).map(SpdxLicense::getName);
-        if (spdxLicense.isPresent()) {
-            dependency.setLicense(spdxLicense.get());
-            return dependency;
-        }
-
-        final Optional<String> matchedLicense = licenseMap.entrySet().stream().filter(it -> licenseName.matches(it.getKey())).map(Entry::getValue).findFirst();
-        if (matchedLicense.isPresent()) {
-            dependency.setLicense(matchedLicense.get());
-            return dependency;
-        }
-
-        LOGGER.info("No licenses found for '{}'", licenseName);
-        return dependency;
-    }
-
-    private Dependency mapMavenDependencyToLicense(Dependency dependency) {
-        if (StringUtils.isBlank(dependency.getLicense())) {
-            final String dependencyName = dependency.getName();
-            for (MavenDependency allowedDependency : mavenDependencyService.getMavenDependencies()) {
-                String matchString = allowedDependency.getKey();
-                if (dependencyName.matches(matchString)) {
-                    dependency.setLicense(allowedDependency.getLicense());
-                }
-            }
-            if (internalDependenciesService.getInternalDependencyRegexes()
-                .stream().anyMatch(dependencyName::matches)) {
-                dependency.setLicense(INTERNAL_LICENSE);
-            }
+            dependency.setLicenses(licenses.stream().map(License::getName).collect(Collectors.toSet()));
         }
         return dependency;
     }

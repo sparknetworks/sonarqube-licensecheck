@@ -1,9 +1,9 @@
 package at.porscheinformatik.sonarqube.licensecheck.spdx;
 
-import java.util.*;
+import at.porscheinformatik.sonarqube.licensecheck.model.LicenseDefinition;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import at.porscheinformatik.sonarqube.licensecheck.license.License;
-import com.fasterxml.jackson.annotation.*;
+import java.util.List;
 
 public class SpdxLicense {
     private String reference;
@@ -67,7 +67,7 @@ public class SpdxLicense {
     @JsonProperty("status")
     public void setStatus(String status) { this.status = status; }
 
-    public License toLicense() {
-        return new License(name, licenseID, false);
+    public LicenseDefinition toLicense() {
+        return new LicenseDefinition(name, licenseID, false);
     }
 }

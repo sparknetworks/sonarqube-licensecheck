@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 public class ProjectResolver {
     public static File prepareProject(Supplier<File> projectSource, Consumer<File> postprocessProject) throws IOException {
         File projectRoot;
-        projectRoot = new File("target/testProject");
+        projectRoot = new File("target/testProject/");
         FileUtils.deleteDirectory(projectRoot);
         projectRoot.mkdirs();
         final File source = projectSource.get();

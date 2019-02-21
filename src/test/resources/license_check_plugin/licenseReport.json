@@ -1,0 +1,3146 @@
+[
+  {
+    "project": "${project.groupId}:${project.artifactId}",
+    "description": "A Java implementation of the Amazon Ion data notation.",
+    "version": "1.0.2",
+    "developers": [
+      "Amazon Ion Team"
+    ],
+    "url": "https://github.com/amznlabs/ion-java/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "software.amazon.ion:ion-java:1.0.2"
+  },
+  {
+    "project": "ANTLR StringTemplate",
+    "description": "StringTemplate is a java template engine for generating source code,\nweb pages, emails, or any other formatted text output.\n\nStringTemplate is particularly good at multi-targeted code generators,\nmultiple site skins, and internationalization/localization. \n\nIt evolved over years of effort developing jGuru.com. \n\nStringTemplate also generates the stringtemplate website: http://www.stringtemplate.org\nand powers the ANTLR v3 code generator. Its distinguishing characteristic \nis that unlike other engines, it strictly enforces model-view separation.\n\nStrict separation makes websites and code generators more flexible\nand maintainable; it also provides an excellent defense against malicious\ntemplate authors.\n\nThere are currently about 600 StringTemplate source downloads a month.",
+    "version": "3.2.1",
+    "developers": [
+      "Terence Parr",
+      "Jim Idle"
+    ],
+    "url": "http://www.stringtemplate.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "BSD licence",
+        "license_url": "http://antlr.org/license.html"
+      }
+    ],
+    "dependency": "org.antlr:stringtemplate:3.2.1"
+  },
+  {
+    "project": "AOP alliance",
+    "description": "AOP Alliance",
+    "version": "1.0",
+    "developers": [
+    ],
+    "url": "http://aopalliance.sourceforge.net",
+    "year": null,
+    "licenses": [
+    ],
+    "dependency": "aopalliance:aopalliance:1.0"
+  },
+  {
+    "project": "ASM Core",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "BSD",
+        "license_url": "http://asm.objectweb.org/license.html"
+      }
+    ],
+    "dependency": "org.ow2.asm:asm:5.0.4"
+  },
+  {
+    "project": "ASM based accessors helper used by json-smart",
+    "description": "Java reflect give poor performance on getter setter an constructor calls,\naccessors-smart use ASM to speed up those calls.",
+    "version": "1.1",
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "net.minidev:accessors-smart:1.1"
+  },
+  {
+    "project": "AWS Java SDK for AWS CloudFormation",
+    "description": "The AWS Java SDK for AWS CloudFormation module holds the client classes that are used for communicating with AWS CloudFormation Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-cloudformation:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for AWS KMS",
+    "description": "The AWS Java SDK for AWS KMS module holds the client classes that are used for communicating with AWS Key Management Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-kms:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon CloudWatch",
+    "description": "The AWS Java SDK for Amazon CloudWatch module holds the client classes that are used for communicating with Amazon CloudWatch Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-cloudwatch:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon DynamoDB",
+    "description": "The AWS Java SDK for Amazon DynamoDB module holds the client classes that are used for communicating with Amazon DynamoDB Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-dynamodb:1.11.98"
+  },
+  {
+    "project": "AWS Java SDK for Amazon EC2",
+    "description": "The AWS Java SDK for Amazon EC2 module holds the client classes that are used for communicating with Amazon EC2 Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-ec2:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon ElastiCache",
+    "description": "The AWS Java SDK for Amazon ElastiCache module holds the client classes that are used for communicating with Amazon ElastiCache Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-elasticache:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon Kinesis",
+    "description": "The AWS Java SDK for Amazon Kinesis module holds the client classes that are used for communicating with Amazon Kinesis Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-kinesis:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon S3",
+    "description": "The AWS Java SDK for Amazon S3 module holds the client classes that are used for communicating with Amazon Simple Storage Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-s3:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon SES",
+    "description": "The AWS Java SDK for Amazon SES module holds the client classes that are used for communicating with Amazon Simple Email Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-ses:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon SNS",
+    "description": "The AWS Java SDK for Amazon SNS module holds the client classes that are used for communicating with Amazon Simple Notification Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-sns:1.11.18"
+  },
+  {
+    "project": "AWS Java SDK for Amazon SQS",
+    "description": "The AWS Java SDK for Amazon SQS module holds the client classes that are used for communicating with Amazon Simple Queue Service",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-sqs:1.11.18"
+  },
+  {
+    "project": "AWS SDK for Java - Core",
+    "description": "The AWS SDK for Java - Core module holds the classes that are used by the individual service clients to interact with Amazon Web Services. Users need to depend on aws-java-sdk artifact for accessing individual client classes.",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:aws-java-sdk-core:1.11.98"
+  },
+  {
+    "project": "Amazon Kinesis Client Library for Java",
+    "description": "The Amazon Kinesis Client Library for Java enables Java developers to easily consume and process data\n    from Amazon Kinesis.",
+    "version": "1.7.0",
+    "developers": [
+      ""
+    ],
+    "url": "https://aws.amazon.com/kinesis",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Amazon Software License",
+        "license_url": "https://aws.amazon.com/asl"
+      }
+    ],
+    "dependency": "com.amazonaws:amazon-kinesis-client:1.7.0"
+  },
+  {
+    "project": "Annotation for JDK requirements",
+    "description": null,
+    "version": "1.0",
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Common Development and Distribution License",
+        "license_url": "http://www.opensource.org/licenses/cddl1.php"
+      }
+    ],
+    "dependency": "org.jvnet:animal-sniffer-annotation:1.0"
+  },
+  {
+    "project": "AntLR Parser Generator",
+    "description": "A framework for constructing recognizers, compilers,\n    and translators from grammatical descriptions containing\n    Java, C#, C++, or Python actions.",
+    "version": "2.7.7",
+    "developers": [
+    ],
+    "url": "http://www.antlr.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "BSD License",
+        "license_url": "http://www.antlr.org/license.html"
+      }
+    ],
+    "dependency": "antlr:antlr:2.7.7"
+  },
+  {
+    "project": "Antlr 3.4 Runtime",
+    "description": "A framework for constructing recognizers, compilers, and translators from grammatical descriptions containing Java, C#, C++, or Python actions.",
+    "version": null,
+    "developers": [
+      "Terence Parr",
+      "Jim Idle"
+    ],
+    "url": "http://www.antlr.org",
+    "year": null,
+    "licenses": [
+    ],
+    "dependency": "org.antlr:antlr-runtime:3.4"
+  },
+  {
+    "project": "Apache Commons Codec",
+    "description": "The Apache Commons Codec package contains simple encoder and decoders for\n     various formats such as Base64 and Hexadecimal.  In addition to these\n     widely used encoders and decoders, the codec package also maintains a\n     collection of phonetic encoding utilities.",
+    "version": "1.10",
+    "developers": [
+      "Henri Yandell",
+      "Tim OBrien",
+      "Scott Sanders",
+      "Rodney Waldhoff",
+      "Daniel Rall",
+      "Jon S. Stevens",
+      "Gary Gregory",
+      "David Graham",
+      "Julius Davies",
+      "Thomas Neidhart"
+    ],
+    "url": "http://commons.apache.org/proper/commons-codec/",
+    "year": "2002",
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "commons-codec:commons-codec:1.10"
+  },
+  {
+    "project": "Apache Commons Collections",
+    "description": "Types that extend and augment the Java Collections Framework.",
+    "version": "3.2.2",
+    "developers": [
+      "Stephen Colebourne",
+      "Morgan Delagrange",
+      "Matthew Hawthorne",
+      "Geir Magnusson",
+      "Craig McClanahan",
+      "Phil Steitz",
+      "Arun M. Thomas",
+      "Rodney Waldhoff",
+      "Henri Yandell",
+      "James Carman",
+      "Robert Burrell Donkin"
+    ],
+    "url": "http://commons.apache.org/collections/",
+    "year": "2001",
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "commons-collections:commons-collections:3.2.2"
+  },
+  {
+    "project": "Apache Commons Lang",
+    "description": "Apache Commons Lang, a package of Java utility classes for the\n  classes that are in java.lang's hierarchy, or are considered to be so\n  standard as to justify existence in java.lang.",
+    "version": "3.4",
+    "developers": [
+      "Daniel Rall",
+      "Stephen Colebourne",
+      "Henri Yandell",
+      "Steven Caswell",
+      "Robert Burrell Donkin",
+      "Gary D. Gregory",
+      "Fredrik Westermarck",
+      "James Carman",
+      "Niall Pemberton",
+      "Matt Benson",
+      "Joerg Schaible",
+      "Oliver Heger",
+      "Paul Benedict",
+      "Benedikt Ritter",
+      "Duncan Jones"
+    ],
+    "url": "http://commons.apache.org/proper/commons-lang/",
+    "year": "2001",
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.apache.commons:commons-lang3:3.4"
+  },
+  {
+    "project": "Apache Commons Logging",
+    "description": "Apache Commons Logging is a thin adapter allowing configurable bridging to other,\n    well known logging systems.",
+    "version": "1.2",
+    "developers": [
+      "Juozas Baliuka",
+      "Morgan Delagrange",
+      "Peter Donald",
+      "Robert Burrell Donkin",
+      "Simon Kitching",
+      "Dennis Lundberg",
+      "Costin Manolache",
+      "Craig McClanahan",
+      "Thomas Neidhart",
+      "Scott Sanders",
+      "Richard Sitze",
+      "Brian Stansberry",
+      "Rodney Waldhoff"
+    ],
+    "url": "http://commons.apache.org/proper/commons-logging/",
+    "year": "2001",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "commons-logging:commons-logging:1.2"
+  },
+  {
+    "project": "Apache HttpClient",
+    "description": "Apache HttpComponents Client",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://hc.apache.org/httpcomponents-client",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.apache.httpcomponents:httpclient:4.5"
+  },
+  {
+    "project": "Apache HttpCore",
+    "description": "Apache HttpComponents Core (blocking I/O)",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://hc.apache.org/httpcomponents-core-ga",
+    "year": "2005",
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.apache.httpcomponents:httpcore:4.4.1"
+  },
+  {
+    "project": "Archaius-core",
+    "description": "archaius-core",
+    "version": "0.7.4",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/archaius",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.archaius:archaius-core:0.7.4"
+  },
+  {
+    "project": "AspectJ runtime",
+    "description": "The runtime needed to execute a program using AspectJ",
+    "version": "1.8.9",
+    "developers": [
+      "Andy Clement"
+    ],
+    "url": "http://www.aspectj.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Eclipse Public License - v 1.0",
+        "license_url": "http://www.eclipse.org/legal/epl-v10.html"
+      }
+    ],
+    "dependency": "org.aspectj:aspectjrt:1.8.9"
+  },
+  {
+    "project": "AspectJ weaver",
+    "description": "The AspectJ weaver introduces advices to java classes",
+    "version": "1.8.9",
+    "developers": [
+      "Andy Clement"
+    ],
+    "url": "http://www.aspectj.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Eclipse Public License - v 1.0",
+        "license_url": "http://www.eclipse.org/legal/epl-v10.html"
+      }
+    ],
+    "dependency": "org.aspectj:aspectjweaver:1.8.9"
+  },
+  {
+    "project": "Bean Validation API",
+    "description": "Bean Validation API",
+    "version": "1.1.0.Final",
+    "developers": [
+      "Emmanuel Bernard",
+      "Emmanuel Bernard",
+      "Hardy Ferentschik",
+      "Gunnar Morling"
+    ],
+    "url": "http://beanvalidation.org",
+    "year": "2007",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "javax.validation:validation-api:1.1.0.Final"
+  },
+  {
+    "project": "Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs",
+    "description": "The Bouncy Castle Java APIs for CMS, PKCS, EAC, TSP, CMP, CRMF, OCSP, and certificate generation. This jar contains APIs for JDK 1.5 to JDK 1.8. The APIs can be used in conjunction with a JCE/JCA provider such as the one provided with the Bouncy Castle Cryptography APIs.",
+    "version": "1.55",
+    "developers": [
+      "The Legion of the Bouncy Castle Inc."
+    ],
+    "url": "http://www.bouncycastle.org/java.html",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Bouncy Castle Licence",
+        "license_url": "http://www.bouncycastle.org/licence.html"
+      }
+    ],
+    "dependency": "org.bouncycastle:bcpkix-jdk15on:1.55"
+  },
+  {
+    "project": "Bouncy Castle Provider",
+    "description": "The Bouncy Castle Crypto package is a Java implementation of cryptographic algorithms. This jar contains JCE provider and lightweight API for the Bouncy Castle Cryptography APIs for JDK 1.5 to JDK 1.8.",
+    "version": "1.55",
+    "developers": [
+      "The Legion of the Bouncy Castle Inc."
+    ],
+    "url": "http://www.bouncycastle.org/java.html",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Bouncy Castle Licence",
+        "license_url": "http://www.bouncycastle.org/licence.html"
+      }
+    ],
+    "dependency": "org.bouncycastle:bcprov-jdk15on:1.55"
+  },
+  {
+    "project": "ClassMate",
+    "description": "Library for introspecting types with full generic information\n        including resolving of field and method types.",
+    "version": "1.3.3",
+    "developers": [
+      "Tatu Saloranta",
+      "Brian Langel"
+    ],
+    "url": "http://github.com/cowtowncoder/java-classmate",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.fasterxml:classmate:1.3.3"
+  },
+  {
+    "project": "Commons Compiler",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "New BSD License",
+        "license_url": "http://dist.codehaus.org/janino/new_bsd_license.txt"
+      }
+    ],
+    "dependency": "org.codehaus.janino:commons-compiler:3.0.1"
+  },
+  {
+    "project": "Commons Configuration",
+    "description": "Tools to assist in the reading of configuration/preferences files in\n        various formats",
+    "version": "1.8",
+    "developers": [
+      "Daniel Rall",
+      "Jason van Zyl",
+      "Martin Poeschl",
+      "dIon Gillard",
+      "Henning P. Schmiedehausen",
+      "Eric Pugh",
+      "Brian E. Dunbar",
+      "Emmanuel Bourg",
+      "Oliver Heger",
+      "J\u00f6rg Schaible",
+      "Ralph Goers"
+    ],
+    "url": "http://commons.apache.org/configuration/",
+    "year": "2001",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "commons-configuration:commons-configuration:1.8"
+  },
+  {
+    "project": "Commons JXPath",
+    "description": "A Java-based implementation of XPath 1.0 that, in addition to XML processing, can inspect/modify Java object graphs (the library's explicit purpose) and even mixed Java/XML structures.",
+    "version": "1.3",
+    "developers": [
+      "Dmitri Plotnikov",
+      "Craig McClanahan",
+      "Matt Benson"
+    ],
+    "url": "http://commons.apache.org/jxpath/",
+    "year": "2001",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "commons-jxpath:commons-jxpath:1.3"
+  },
+  {
+    "project": "Commons Lang",
+    "description": "Commons Lang, a package of Java utility classes for the\n        classes that are in java.lang's hierarchy, or are considered to be so\n        standard as to justify existence in java.lang.",
+    "version": "2.6",
+    "developers": [
+      "Daniel Rall",
+      "Stephen Colebourne",
+      "Henri Yandell",
+      "Steven Caswell",
+      "Robert Burrell Donkin",
+      "Gary D. Gregory",
+      "Phil Steitz",
+      "Fredrik Westermarck",
+      "James Carman",
+      "Niall Pemberton",
+      "Matt Benson",
+      "Joerg Schaible",
+      "Oliver Heger",
+      "Paul Benedict"
+    ],
+    "url": "http://commons.apache.org/lang/",
+    "year": "2001",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "commons-lang:commons-lang:2.6"
+  },
+  {
+    "project": "Commons Math",
+    "description": "The Math project is a library of lightweight, self-contained mathematics and statistics components addressing the most common practical problems not immediately available in the Java programming language or commons-lang.",
+    "version": "2.2",
+    "developers": [
+      "Mikkel Meyer Andersen",
+      "Bill Barker",
+      "Albert Davidson Chou",
+      "Mark Diggory",
+      "Robert Burrell Donkin",
+      "Tim O'Brien",
+      "Luc Maisonobe",
+      "J. Pietschmann",
+      "Dimitri Pourbaix",
+      "Phil Steitz",
+      "Brent Worden",
+      "Gilles Sadowski"
+    ],
+    "url": "http://commons.apache.org/math/",
+    "year": "2003",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.apache.commons:commons-math:2.2"
+  },
+  {
+    "project": "ElastiCacheJavaClusterClient",
+    "description": "Amazon ElastiCache Cluster Client is an enhanced Java library to connect to ElastiCache clusters. This client library has been built upon Spymemcached and is released under the Amazon Software License.",
+    "version": "1.1.0",
+    "developers": [
+      ""
+    ],
+    "url": "https://aws.amazon.com/documentation/elasticache/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Amazon Software License",
+        "license_url": "http://aws.amazon.com/asl/"
+      }
+    ],
+    "dependency": "com.amazonaws:elasticache-java-cluster-client:1.1.0"
+  },
+  {
+    "project": "Eureka-client",
+    "description": "eureka-client",
+    "version": "1.4.12",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/eureka",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.eureka:eureka-client:1.4.12"
+  },
+  {
+    "project": "Eureka-core",
+    "description": "eureka-core",
+    "version": "1.4.12",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/eureka",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.eureka:eureka-core:1.4.12"
+  },
+  {
+    "project": "Evo Inflector",
+    "description": "Evo Inflector implements English pluralization algorithm.",
+    "version": "1.2.1",
+    "developers": [
+      "S\u0142awek Piotrowski"
+    ],
+    "url": "http://atteo.org/static/evo-inflector",
+    "year": null,
+    "licenses": [
+    ],
+    "dependency": "org.atteo:evo-inflector:1.2.1"
+  },
+  {
+    "project": "Feign Core",
+    "description": "Feign Core",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.github.openfeign:feign-core:9.3.1"
+  },
+  {
+    "project": "Feign Hystrix",
+    "description": "Feign Hystrix",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.github.openfeign:feign-hystrix:9.3.1"
+  },
+  {
+    "project": "Feign SLF4J",
+    "description": "Feign SLF4J",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.github.openfeign:feign-slf4j:9.3.1"
+  },
+  {
+    "project": "Google Guice - Core Library",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.inject:guice:4.0"
+  },
+  {
+    "project": "Google Guice - Extensions - AssistedInject",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.inject.extensions:guice-assistedinject:4.0"
+  },
+  {
+    "project": "Google Guice - Extensions - Grapher",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.inject.extensions:guice-grapher:4.0"
+  },
+  {
+    "project": "Google Guice - Extensions - MultiBindings",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.inject.extensions:guice-multibindings:4.0"
+  },
+  {
+    "project": "Governator",
+    "description": "governator",
+    "version": "1.12.10",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/governator",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.governator:governator:1.12.10"
+  },
+  {
+    "project": "Governator-api",
+    "description": "governator-api",
+    "version": "1.12.10",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/governator",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.governator:governator-api:1.12.10"
+  },
+  {
+    "project": "Governator-core",
+    "description": "governator-core",
+    "version": "1.12.10",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/governator",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.governator:governator-core:1.12.10"
+  },
+  {
+    "project": "Gson",
+    "description": "Google Gson library",
+    "version": "2.3.1",
+    "developers": [
+      "Inderjeet Singh",
+      "Joel Leitch",
+      "Jesse Wilson"
+    ],
+    "url": "http://code.google.com/p/google-gson/",
+    "year": "2008",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.code.gson:gson:2.3.1"
+  },
+  {
+    "project": "Guava: Google Core Libraries for Java",
+    "description": "Guava is a suite of core and expanded libraries that include\n    utility classes, google's collections, io classes, and much\n    much more.\n\n    Guava has only one code dependency - javax.annotation,\n    per the JSR-305 spec.",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.google.guava:guava:18.0"
+  },
+  {
+    "project": "HdrHistogram",
+    "description": "HdrHistogram supports the recording and analyzing sampled data value\n        counts across a configurable integer value range with configurable value\n        precision within the range. Value precision is expressed as the number of\n        significant digits in the value recording, and provides control over value\n        quantization behavior across the value range and the subsequent value\n        resolution at any given level.",
+    "version": "2.1.9",
+    "developers": [
+      "Gil Tene"
+    ],
+    "url": "http://hdrhistogram.github.io/HdrHistogram/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Public Domain, per Creative Commons CC0",
+        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/"
+      }
+    ],
+    "dependency": "org.hdrhistogram:HdrHistogram:2.1.9"
+  },
+  {
+    "project": "Hibernate Validator Engine",
+    "description": "Hibernate's Bean Validation (JSR-303) reference implementation.",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.hibernate:hibernate-validator:5.3.4.Final"
+  },
+  {
+    "project": "Hystrix-core",
+    "description": "hystrix-core",
+    "version": "1.5.6",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/Hystrix",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.hystrix:hystrix-core:1.5.6"
+  },
+  {
+    "project": "ICU4J",
+    "description": "International Component for Unicode for Java (ICU4J) is a mature, widely used Java library\n    providing Unicode and Globalization support",
+    "version": "58.1",
+    "developers": [
+      "Mark Davis",
+      "John Emmons",
+      "Doug Felt",
+      "Deborah Goldsmith",
+      "Steven Loomis",
+      "Markus Scherer",
+      "Peter Edberg",
+      "Yoshito Umaoka"
+    ],
+    "url": "http://icu-project.org/",
+    "year": "2001",
+    "licenses": [
+      {
+        "license": "ICU License",
+        "license_url": "http://source.icu-project.org/repos/icu/icu/trunk/LICENSE"
+      }
+    ],
+    "dependency": "com.ibm.icu:icu4j:58.1"
+  },
+  {
+    "project": "JBoss Logging 3",
+    "description": "The JBoss Logging Framework",
+    "version": "3.3.0.Final",
+    "developers": [
+    ],
+    "url": "http://www.jboss.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.jboss.logging:jboss-logging:3.3.0.Final"
+  },
+  {
+    "project": "JCL 1.2 implemented over SLF4J",
+    "description": "JCL 1.2 implemented over SLF4J",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://www.slf4j.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "MIT License",
+        "license_url": "http://www.opensource.org/licenses/mit-license.php"
+      }
+    ],
+    "dependency": "org.slf4j:jcl-over-slf4j:1.7.24"
+  },
+  {
+    "project": "JMES Path Query library",
+    "description": "Implementation of the JMES Path JSON Query langauge for Java.",
+    "version": null,
+    "developers": [
+      ""
+    ],
+    "url": "https://aws.amazon.com/sdkforjava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://aws.amazon.com/apache2.0"
+      }
+    ],
+    "dependency": "com.amazonaws:jmespath-java:1.11.98"
+  },
+  {
+    "project": "JSON Small and Fast Parser",
+    "description": "JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. It is based on a subset of the JavaScript Programming Language, Standard ECMA-262 3rd Edition - December 1999. JSON is a text format that is completely language independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others. These properties make JSON an ideal data-interchange language.",
+    "version": "2.2.1",
+    "developers": [
+      "Uriel Chemouni"
+    ],
+    "url": "http://www.minidev.net/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "net.minidev:json-smart:2.2.1"
+  },
+  {
+    "project": "JSON Web Token support for the JVM",
+    "description": null,
+    "version": "0.5.1",
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.jsonwebtoken:jjwt:0.5.1"
+  },
+  {
+    "project": "JSON library from Android SDK",
+    "description": "\u00a0\u00a0JSON (JavaScript Object Notation) is a lightweight data-interchange format.\n      This is the org.json compatible Android implementation extracted from the Android SDK\n   \u00a0",
+    "version": "0.0.20131108.vaadin1",
+    "developers": [
+      "Android Dev"
+    ],
+    "url": "http://developer.android.com/sdk",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "com.vaadin.external.google:android-json:0.0.20131108.vaadin1"
+  },
+  {
+    "project": "JUL to SLF4J bridge",
+    "description": "JUL to SLF4J bridge",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://www.slf4j.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "MIT License",
+        "license_url": "http://www.opensource.org/licenses/mit-license.php"
+      }
+    ],
+    "dependency": "org.slf4j:jul-to-slf4j:1.7.24"
+  },
+  {
+    "project": "Jackson dataformat: CBOR",
+    "description": "Support for reading and writing Concise Binary Object Representation\n([CBOR](https://www.rfc-editor.org/info/rfc7049)\nencoded data using Jackson abstractions (streaming API, data binding, tree model)",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://github.com/FasterXML/jackson-dataformats-binary",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.8.7"
+  },
+  {
+    "project": "Jackson-annotations",
+    "description": "Core annotations used for value types, used by Jackson data binding package.",
+    "version": "2.8.0",
+    "developers": [
+    ],
+    "url": "http://github.com/FasterXML/jackson",
+    "year": "2008",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.fasterxml.jackson.core:jackson-annotations:2.8.0"
+  },
+  {
+    "project": "Jackson-core",
+    "description": "Core Jackson abstractions, basic JSON streaming API implementation",
+    "version": "2.8.7",
+    "developers": [
+    ],
+    "url": "https://github.com/FasterXML/jackson-core",
+    "year": "2008",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.fasterxml.jackson.core:jackson-core:2.8.7"
+  },
+  {
+    "project": "Jackson-databind",
+    "description": "General data-binding functionality for Jackson: works on core streaming API",
+    "version": "2.8.7",
+    "developers": [
+    ],
+    "url": "http://github.com/FasterXML/jackson",
+    "year": "2008",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.fasterxml.jackson.core:jackson-databind:2.8.7"
+  },
+  {
+    "project": "Jackson-module-jsonSchema",
+    "description": "Add-on module for Jackson (http://jackson.codehaus.org) to support\nJSON Schema (http://tools.ietf.org/html/draft-zyp-json-schema-03) version 3 generation.",
+    "version": "2.8.0",
+    "developers": [
+      "Jack Phelan",
+      "Tatu Saloranta"
+    ],
+    "url": "https://github.com/FasterXML/jackson-module-jsonSchema",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.fasterxml.jackson.module:jackson-module-jsonSchema:2.8.0"
+  },
+  {
+    "project": "Janino",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "New BSD License",
+        "license_url": "http://dist.codehaus.org/janino/new_bsd_license.txt"
+      }
+    ],
+    "dependency": "org.codehaus.janino:janino:3.0.1"
+  },
+  {
+    "project": "JavaMail API jar",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "CDDL/GPLv2+CE",
+        "license_url": "https://glassfish.java.net/public/CDDL+GPL_1_1.html"
+      }
+    ],
+    "dependency": "javax.mail:javax.mail-api:1.5.6"
+  },
+  {
+    "project": "Javax.inject",
+    "description": "The javax.inject API",
+    "version": "1",
+    "developers": [
+    ],
+    "url": "http://code.google.com/p/atinject/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "javax.inject:javax.inject:1"
+  },
+  {
+    "project": "Jersey Apache HTTP Client 4.x",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "CDDL 1.1",
+        "license_url": "http://glassfish.java.net/public/CDDL+GPL_1_1.html"
+      },
+      {
+        "license": "GPL2 w/ CPE",
+        "license_url": "http://glassfish.java.net/public/CDDL+GPL_1_1.html"
+      }
+    ],
+    "dependency": "com.sun.jersey.contribs:jersey-apache-client4:1.19.1"
+  },
+  {
+    "project": "Jersey-client",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "CDDL 1.1",
+        "license_url": "http://glassfish.java.net/public/CDDL+GPL_1_1.html"
+      },
+      {
+        "license": "GPL2 w/ CPE",
+        "license_url": "http://glassfish.java.net/public/CDDL+GPL_1_1.html"
+      }
+    ],
+    "dependency": "com.sun.jersey:jersey-client:1.19.1"
+  },
+  {
+    "project": "Jersey-core",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "CDDL 1.1",
+        "license_url": "http://glassfish.java.net/public/CDDL+GPL_1_1.html"
+      },
+      {
+        "license": "GPL2 w/ CPE",
+        "license_url": "http://glassfish.java.net/public/CDDL+GPL_1_1.html"
+      }
+    ],
+    "dependency": "com.sun.jersey:jersey-core:1.19.1"
+  },
+  {
+    "project": "Jettison",
+    "description": "A StAX implementation for JSON.",
+    "version": "1.3.7",
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.codehaus.jettison:jettison:1.3.7"
+  },
+  {
+    "project": "Joda-Time",
+    "description": "Date and time library to replace JDK date handling",
+    "version": "2.7",
+    "developers": [
+      "Stephen Colebourne",
+      "Brian S O'Neill"
+    ],
+    "url": "http://www.joda.org/joda-time/",
+    "year": "2002",
+    "licenses": [
+      {
+        "license": "Apache 2",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "joda-time:joda-time:2.7"
+  },
+  {
+    "project": "Json Path",
+    "description": "Java port of Stefan Goessner JsonPath.",
+    "version": "2.2.0",
+    "developers": [
+      "Kalle Stenflo"
+    ],
+    "url": "https://github.com/jayway/JsonPath",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.jayway.jsonpath:json-path:2.2.0"
+  },
+  {
+    "project": "Jsr311-api",
+    "description": null,
+    "version": "1.1.1",
+    "developers": [
+    ],
+    "url": "https://jsr311.dev.java.net",
+    "year": null,
+    "licenses": [
+      {
+        "license": "CDDL License",
+        "license_url": "http://www.opensource.org/licenses/cddl1.php"
+      }
+    ],
+    "dependency": "javax.ws.rs:jsr311-api:1.1.1"
+  },
+  {
+    "project": "Log4j Implemented Over SLF4J",
+    "description": "Log4j implemented over SLF4J",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://www.slf4j.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache Software Licenses",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.slf4j:log4j-over-slf4j:1.7.1"
+  },
+  {
+    "project": "Logback Classic Module",
+    "description": "logback-classic module",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Eclipse Public License - v 1.0",
+        "license_url": "http://www.eclipse.org/legal/epl-v10.html"
+      },
+      {
+        "license": "GNU Lesser General Public License",
+        "license_url": "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
+      }
+    ],
+    "dependency": "ch.qos.logback:logback-classic:1.1.11"
+  },
+  {
+    "project": "Logback Core Module",
+    "description": "logback-core module",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Eclipse Public License - v 1.0",
+        "license_url": "http://www.eclipse.org/legal/epl-v10.html"
+      },
+      {
+        "license": "GNU Lesser General Public License",
+        "license_url": "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
+      }
+    ],
+    "dependency": "ch.qos.logback:logback-core:1.1.11"
+  },
+  {
+    "project": "MXP1: Xml Pull Parser 3rd Edition (XPP3)",
+    "description": "MXP1 is a stable XmlPull parsing engine that is based on ideas from XPP and in particular XPP2 but completely revised and rewritten to take the best advantage of latest JIT JVMs such as Hotspot in JDK 1.4+.",
+    "version": "1.1.4c",
+    "developers": [
+    ],
+    "url": "http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Indiana University Extreme! Lab Software License, vesion 1.1.1",
+        "license_url": "http://www.extreme.indiana.edu/viewcvs/~checkout~/XPP3/java/LICENSE.txt"
+      },
+      {
+        "license": "Public Domain",
+        "license_url": "http://creativecommons.org/licenses/publicdomain"
+      }
+    ],
+    "dependency": "xpp3:xpp3_min:1.1.4c"
+  },
+  {
+    "project": "Metrics Core",
+    "description": "Metrics is a Java library which gives you unparalleled insight into what your code does in\n        production. Metrics provides a powerful toolkit of ways to measure the behavior of critical\n        components in your production environment.",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    ],
+    "dependency": "io.dropwizard.metrics:metrics-core:3.1.3"
+  },
+  {
+    "project": "Netflix-commons-util",
+    "description": "netflix-commons-util developed by Netflix",
+    "version": "0.1.1",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/netflix-commons",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.netflix-commons:netflix-commons-util:0.1.1"
+  },
+  {
+    "project": "Netflix-eventbus",
+    "description": "netflix-eventbus",
+    "version": "0.3.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/netflix-commons",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.netflix-commons:netflix-eventbus:0.3.0"
+  },
+  {
+    "project": "Netflix-infix",
+    "description": "netflix-infix",
+    "version": "0.3.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/netflix-commons",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.netflix-commons:netflix-infix:0.3.0"
+  },
+  {
+    "project": "Netflix-statistics",
+    "description": "netflix-statistics developed by Netflix",
+    "version": "0.1.1",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/netflix-commons",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.netflix-commons:netflix-statistics:0.1.1"
+  },
+  {
+    "project": "Netty/Buffer",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.netty:netty-buffer:4.0.27.Final"
+  },
+  {
+    "project": "Netty/Codec",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.netty:netty-codec:4.0.27.Final"
+  },
+  {
+    "project": "Netty/Codec/HTTP",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.netty:netty-codec-http:4.0.27.Final"
+  },
+  {
+    "project": "Netty/Common",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.netty:netty-common:4.0.27.Final"
+  },
+  {
+    "project": "Netty/Handler",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.netty:netty-handler:4.0.27.Final"
+  },
+  {
+    "project": "Netty/Transport",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.netty:netty-transport:4.0.27.Final"
+  },
+  {
+    "project": "Netty/Transport/Native/Epoll",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "io.netty:netty-transport-native-epoll:4.0.27.Final"
+  },
+  {
+    "project": "New Relic Java API Jar",
+    "description": "The New Relic Java Agent Api.",
+    "version": "3.33.0",
+    "developers": [
+      "Tyler Benson",
+      "Jeff Berkowitz",
+      "Marcelo Cintra",
+      "Saxon D'Aubin",
+      "Chris Hansen",
+      "Andrew Kent",
+      "Ashley Puls",
+      "Sebastian Ramirez",
+      "Thomas Spring",
+      "Todd West",
+      "Travis Hoffman",
+      "Russell Thomason"
+    ],
+    "url": "https://newrelic.com/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "",
+        "license_url": "https://newrelic.com/docs/java/java-agent-license"
+      }
+    ],
+    "dependency": "com.newrelic.agent.java:newrelic-api:3.33.0"
+  },
+  {
+    "project": "Project Lombok",
+    "description": "Spice up your java: Automatic Resource Management, automatic generation of getters, setters, equals, hashCode and toString, and more!",
+    "version": "1.16.20",
+    "developers": [
+      "Reinier Zwitserloot",
+      "Roel Spilker",
+      "Robbert Jan Grootjans"
+    ],
+    "url": "https://projectlombok.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The MIT License",
+        "license_url": "https://projectlombok.org/LICENSE"
+      }
+    ],
+    "dependency": "org.projectlombok:lombok:1.16.20"
+  },
+  {
+    "project": "Prometheus Java Simpleclient",
+    "description": "Core instrumentation library for the simpleclient.",
+    "version": null,
+    "developers": [
+      "Brian Brazil"
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.prometheus:simpleclient:0.0.17"
+  },
+  {
+    "project": "Prometheus Java Simpleclient Common",
+    "description": "Common code used by various modules of the Simpleclient.",
+    "version": null,
+    "developers": [
+      "Brian Brazil"
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.prometheus:simpleclient_common:0.0.17"
+  },
+  {
+    "project": "Protocol Buffer Java API",
+    "description": "Protocol Buffers are a way of encoding structured data in an efficient yet\n    extensible format.",
+    "version": "2.6.1",
+    "developers": [
+    ],
+    "url": "https://developers.google.com/protocol-buffers/",
+    "year": "2008",
+    "licenses": [
+      {
+        "license": "New BSD license",
+        "license_url": "http://www.opensource.org/licenses/bsd-license.php"
+      }
+    ],
+    "dependency": "com.google.protobuf:protobuf-java:2.6.1"
+  },
+  {
+    "project": "Ribbon",
+    "description": "ribbon",
+    "version": "2.2.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/ribbon",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.ribbon:ribbon:2.2.0"
+  },
+  {
+    "project": "Ribbon-core",
+    "description": "ribbon-core",
+    "version": "2.2.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/ribbon",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.ribbon:ribbon-core:2.2.0"
+  },
+  {
+    "project": "Ribbon-eureka",
+    "description": "ribbon-eureka",
+    "version": "2.2.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/ribbon",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.ribbon:ribbon-eureka:2.2.0"
+  },
+  {
+    "project": "Ribbon-httpclient",
+    "description": "ribbon-httpclient",
+    "version": "2.2.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/ribbon",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.ribbon:ribbon-httpclient:2.2.0"
+  },
+  {
+    "project": "Ribbon-loadbalancer",
+    "description": "ribbon-loadbalancer",
+    "version": "2.2.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/ribbon",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.ribbon:ribbon-loadbalancer:2.2.0"
+  },
+  {
+    "project": "Ribbon-transport",
+    "description": "ribbon-transport",
+    "version": "2.2.0",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/ribbon",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.ribbon:ribbon-transport:2.2.0"
+  },
+  {
+    "project": "Rxjava",
+    "description": "rxjava",
+    "version": "1.1.10",
+    "developers": [
+      "Ben Christensen"
+    ],
+    "url": "https://github.com/ReactiveX/RxJava",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.reactivex:rxjava:1.1.10"
+  },
+  {
+    "project": "Rxnetty",
+    "description": "rxnetty",
+    "version": "0.4.9",
+    "developers": [
+      "Ben Christensen",
+      "Ben Christensen"
+    ],
+    "url": "https://github.com/ReactiveX/RxNetty",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.reactivex:rxnetty:0.4.9"
+  },
+  {
+    "project": "Rxnetty-contexts",
+    "description": "rxnetty-contexts",
+    "version": "0.4.9",
+    "developers": [
+      "Ben Christensen",
+      "Ben Christensen"
+    ],
+    "url": "https://github.com/ReactiveX/RxNetty",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.reactivex:rxnetty-contexts:0.4.9"
+  },
+  {
+    "project": "Rxnetty-servo",
+    "description": "rxnetty-servo",
+    "version": "0.4.9",
+    "developers": [
+      "Ben Christensen",
+      "Ben Christensen"
+    ],
+    "url": "https://github.com/ReactiveX/RxNetty",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "io.reactivex:rxnetty-servo:0.4.9"
+  },
+  {
+    "project": "SLF4J API Module",
+    "description": "The slf4j API",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://www.slf4j.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "MIT License",
+        "license_url": "http://www.opensource.org/licenses/mit-license.php"
+      }
+    ],
+    "dependency": "org.slf4j:slf4j-api:1.7.24"
+  },
+  {
+    "project": "Sentry-Java client",
+    "description": "Sentry client written in Java.",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "BSD New",
+        "license_url": "http://opensource.org/licenses/BSD-3-Clause"
+      }
+    ],
+    "dependency": "io.sentry:sentry:1.7.1"
+  },
+  {
+    "project": "Sentry-Java for Logback",
+    "description": "Logback appender allowing to send logs to the Sentry-Java client.",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "BSD New",
+        "license_url": "http://opensource.org/licenses/BSD-3-Clause"
+      }
+    ],
+    "dependency": "io.sentry:sentry-logback:1.7.1"
+  },
+  {
+    "project": "Servo-core",
+    "description": "servo-core",
+    "version": "0.10.1",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/servo",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.servo:servo-core:0.10.1"
+  },
+  {
+    "project": "Servo-internal",
+    "description": "servo-internal",
+    "version": "0.10.1",
+    "developers": [
+      "Netflix Open Source Development"
+    ],
+    "url": "https://github.com/Netflix/servo",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.netflix.servo:servo-internal:0.10.1"
+  },
+  {
+    "project": "SnakeYAML",
+    "description": "YAML 1.1 parser and emitter for Java",
+    "version": "1.17",
+    "developers": [
+      "Andrey Somov",
+      "Alexander Maslov",
+      "Jordan Angold"
+    ],
+    "url": "http://www.snakeyaml.org",
+    "year": "2008",
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.yaml:snakeyaml:1.17"
+  },
+  {
+    "project": "Spring AOP",
+    "description": "Spring AOP",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-aop:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Beans",
+    "description": "Spring Beans",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-beans:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Boot",
+    "description": "Spring Boot",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot AOP Starter",
+    "description": "Starter for aspect-oriented programming with Spring AOP and AspectJ",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter-aop:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Actuator",
+    "description": "Spring Boot Actuator",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-actuator:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Actuator Starter",
+    "description": "Starter for using Spring Boot's Actuator which provides production\n\t\tready features to help you monitor and manage your application",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter-actuator:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot AutoConfigure",
+    "description": "Spring Boot AutoConfigure",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-autoconfigure:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Configuration Processor",
+    "description": "Spring Boot Configuration Processor",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-configuration-processor:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Data REST Starter",
+    "description": "Starter for exposing Spring Data repositories over REST using Spring\n\t\tData REST",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter-data-rest:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Logging Starter",
+    "description": "Starter for logging using Logback. Default logging starter",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter-logging:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Security Starter",
+    "description": "Starter for using Spring Security",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter-security:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Starter",
+    "description": "Core starter, including auto-configuration support, logging and YAML",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Tomcat Starter",
+    "description": "Starter for using Tomcat as the embedded servlet container. Default\n\t\tservlet container starter used by spring-boot-starter-web",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter-tomcat:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Boot Web Starter",
+    "description": "Starter for building web, including RESTful, applications using Spring\n\t\tMVC. Uses Tomcat as the default embedded container",
+    "version": null,
+    "developers": [
+    ],
+    "url": "http://projects.spring.io/spring-boot/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE"
+  },
+  {
+    "project": "Spring Cloud AWS Autoconfigure",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-aws-autoconfigure:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring Cloud AWS Context Module",
+    "description": "Spring Cloud AWS Context Module",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-aws-context:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring Cloud AWS Core Module",
+    "description": "Spring Cloud AWS Core Module",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-aws-core:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring Cloud AWS Messaging Module",
+    "description": "Spring Cloud AWS Messaging Module",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-aws-messaging:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring Cloud Commons",
+    "description": "Spring Cloud Commons",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-commons:1.1.8.RELEASE"
+  },
+  {
+    "project": "Spring Cloud Config AWS KMS",
+    "description": "Spring Cloud Config add-on that provides encryption via AWS KMS",
+    "version": "1.4",
+    "developers": [
+      "Andr\u00e9 Hartmann"
+    ],
+    "url": "http://github.com/zalando/spring-cloud-config-aws-kms",
+    "year": "2015",
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.zalando:spring-cloud-config-aws-kms:1.4"
+  },
+  {
+    "project": "Spring Cloud Config Client",
+    "description": "This project is a Spring configuration client.",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://spring.io",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-config-client:1.2.3.RELEASE"
+  },
+  {
+    "project": "Spring Cloud Context",
+    "description": "Spring Cloud Context",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-context:1.1.8.RELEASE"
+  },
+  {
+    "project": "Spring Cloud Netflix Core",
+    "description": "Spring Cloud Netflix Core",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-netflix-core:1.2.6.RELEASE"
+  },
+  {
+    "project": "Spring Cloud Netflix Eureka Client",
+    "description": "Spring Cloud Netflix Eureka Client",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-netflix-eureka-client:1.2.6.RELEASE"
+  },
+  {
+    "project": "Spring Cloud Sleuth Core",
+    "description": "Spring Cloud Sleuth Core",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-sleuth-core:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring Context",
+    "description": "Spring Context",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-context:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Context Support",
+    "description": "Spring Context Support",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-context-support:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Core",
+    "description": "Spring Core",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-core:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Data Core",
+    "description": null,
+    "version": "1.13.1.RELEASE",
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.data:spring-data-commons:1.13.1.RELEASE"
+  },
+  {
+    "project": "Spring Data DynamoDb",
+    "description": "Spring Data module providing support for DynamoDb repositories.",
+    "version": "4.5.0",
+    "developers": [
+      "Michael Lavelle",
+      "Sebastian Just"
+    ],
+    "url": "http://github.com/derjust/spring-data-dynamodb",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "com.github.derjust:spring-data-dynamodb:4.5.0"
+  },
+  {
+    "project": "Spring Data REST - Core",
+    "description": "Spring Data REST - Core",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.data:spring-data-rest-core:2.6.1.RELEASE"
+  },
+  {
+    "project": "Spring Data REST - WebMVC",
+    "description": "Spring Data REST - WebMVC",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.data:spring-data-rest-webmvc:2.6.1.RELEASE"
+  },
+  {
+    "project": "Spring Expression Language (SpEL)",
+    "description": "Spring Expression Language (SpEL)",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-expression:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring HATEOAS",
+    "description": "Library to support implementing representations for\n\t\thyper-text driven REST web services.",
+    "version": "0.23.0.RELEASE",
+    "developers": [
+      "Oliver Gierke"
+    ],
+    "url": "http://github.com/SpringSource/spring-hateoas",
+    "year": "2012-2016",
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE"
+  },
+  {
+    "project": "Spring Messaging",
+    "description": "Spring Messaging",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-messaging:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Mobile Device Resolution Support",
+    "description": "Spring Mobile Device Resolution Support",
+    "version": "1.1.5.RELEASE",
+    "developers": [
+      "Roy Clarkson"
+    ],
+    "url": "https://github.com/spring-projects/spring-mobile",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework.mobile:spring-mobile-device:1.1.5.RELEASE"
+  },
+  {
+    "project": "Spring Plugin - Core",
+    "description": "Core plugin infrastructure",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE"
+  },
+  {
+    "project": "Spring Retry",
+    "description": "Spring Retry provides an abstraction around retrying failed operations, with an emphasis on declarative control of the process and policy-based bahaviour that is easy to extend and customize.  For instance, you can configure a plain POJO operation to retry if it fails, based on the type of exception, and with a fixed or exponential backoff.",
+    "version": "1.2.1.RELEASE",
+    "developers": [
+      "Dave Syer"
+    ],
+    "url": "http://www.springsource.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework.retry:spring-retry:1.2.1.RELEASE"
+  },
+  {
+    "project": "Spring Transaction",
+    "description": "Spring Transaction",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-tx:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Web",
+    "description": "Spring Web",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-web:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring Web MVC",
+    "description": "Spring Web MVC",
+    "version": "4.3.7.RELEASE",
+    "developers": [
+      "Juergen Hoeller"
+    ],
+    "url": "https://github.com/spring-projects/spring-framework",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework:spring-webmvc:4.3.7.RELEASE"
+  },
+  {
+    "project": "Spring-boot-starter-prometheus",
+    "description": "Metrics endpoint prometheus.io format for Spring Boot",
+    "version": "0.1",
+    "developers": [
+      "Oleg Vyukov"
+    ],
+    "url": "https://github.com/akaGelo/spring-boot-starter-prometheus",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "ru.vyukov:spring-boot-starter-prometheus:0.1"
+  },
+  {
+    "project": "Spring-cloud-aws-actuator",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-aws-actuator:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter",
+    "description": "Spring Cloud Starter",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://projects.spring.io/spring-cloud",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter:1.1.8.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter-archaius",
+    "description": "Spring Cloud Starter",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://projects.spring.io/spring-cloud",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter-archaius:1.2.6.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter-aws",
+    "description": "Spring Cloud Starter AWS",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://projects.spring.io/spring-cloud",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter-aws:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter-aws-messaging",
+    "description": "Spring Cloud Starter AWS Messaging",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://projects.spring.io/spring-cloud",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter-aws-messaging:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter-eureka",
+    "description": "Spring Cloud Starter",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://projects.spring.io/spring-cloud",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter-eureka:1.2.6.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter-feign",
+    "description": "Spring Cloud Starter",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://projects.spring.io/spring-cloud",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter-feign:1.2.6.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter-ribbon",
+    "description": "Spring Cloud Starter",
+    "version": null,
+    "developers": [
+    ],
+    "url": "https://projects.spring.io/spring-cloud",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter-ribbon:1.2.6.RELEASE"
+  },
+  {
+    "project": "Spring-cloud-starter-sleuth",
+    "description": "Spring Cloud Starter",
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    ],
+    "dependency": "org.springframework.cloud:spring-cloud-starter-sleuth:1.1.3.RELEASE"
+  },
+  {
+    "project": "Spring-security-config",
+    "description": "spring-security-config",
+    "version": "4.2.2.RELEASE",
+    "developers": [
+      "Rob Winch"
+    ],
+    "url": "http://spring.io/spring-security",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework.security:spring-security-config:4.2.2.RELEASE"
+  },
+  {
+    "project": "Spring-security-core",
+    "description": "spring-security-core",
+    "version": "4.2.2.RELEASE",
+    "developers": [
+      "Rob Winch"
+    ],
+    "url": "http://spring.io/spring-security",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework.security:spring-security-core:4.2.2.RELEASE"
+  },
+  {
+    "project": "Spring-security-crypto",
+    "description": "spring-security-crypto",
+    "version": "4.2.2.RELEASE",
+    "developers": [
+      "Rob Winch"
+    ],
+    "url": "http://spring.io/spring-security",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework.security:spring-security-crypto:4.2.2.RELEASE"
+  },
+  {
+    "project": "Spring-security-rsa",
+    "description": "Spring Security RSA is a small utility library for RSA ciphers.\n\tIt belongs to the family of Spring Security crypto libraries that handle encoding and decoding text as\n\ta general, useful thing to be able to do.",
+    "version": "1.0.3.RELEASE",
+    "developers": [
+      "Dave Syer"
+    ],
+    "url": "http://github.com/spring-projects/spring-security-oauth",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework.security:spring-security-rsa:1.0.3.RELEASE"
+  },
+  {
+    "project": "Spring-security-web",
+    "description": "spring-security-web",
+    "version": "4.2.2.RELEASE",
+    "developers": [
+      "Rob Winch"
+    ],
+    "url": "http://spring.io/spring-security",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.springframework.security:spring-security-web:4.2.2.RELEASE"
+  },
+  {
+    "project": "StAX API",
+    "description": "StAX API is the standard java XML processing API defined by JSR-173",
+    "version": "1.0.1",
+    "developers": [
+      "Aleksander Slominski",
+      "Chris Fry"
+    ],
+    "url": "http://stax.codehaus.org/",
+    "year": "2005",
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "stax:stax-api:1.0.1"
+  },
+  {
+    "project": "Stax2 API",
+    "description": "tax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.",
+    "version": "3.1.4",
+    "developers": [
+      "Tatu Saloranta"
+    ],
+    "url": "http://wiki.fasterxml.com/WoodstoxStax2",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The BSD License",
+        "license_url": "http://www.opensource.org/licenses/bsd-license.php"
+      }
+    ],
+    "dependency": "org.codehaus.woodstox:stax2-api:3.1.4"
+  },
+  {
+    "project": "Streaming API for XML",
+    "description": "StAX is a standard XML processing API that allows you to stream XML data from and to your application.",
+    "version": "1.0-2",
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "GNU General Public Library",
+        "license_url": "http://www.gnu.org/licenses/gpl.txt"
+      },
+      {
+        "license": "COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0",
+        "license_url": "http://www.sun.com/cddl/cddl.html"
+      }
+    ],
+    "dependency": "javax.xml.stream:stax-api:1.0-2"
+  },
+  {
+    "project": "Tomcat-embed-core",
+    "description": "Core Tomcat implementation",
+    "version": "8.5.11",
+    "developers": [
+    ],
+    "url": "http://tomcat.apache.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.apache.tomcat.embed:tomcat-embed-core:8.5.11"
+  },
+  {
+    "project": "Tomcat-embed-el",
+    "description": "Core Tomcat implementation",
+    "version": "8.5.11",
+    "developers": [
+    ],
+    "url": "http://tomcat.apache.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.apache.tomcat.embed:tomcat-embed-el:8.5.11"
+  },
+  {
+    "project": "Tomcat-embed-websocket",
+    "description": "Core Tomcat implementation",
+    "version": "8.5.11",
+    "developers": [
+    ],
+    "url": "http://tomcat.apache.org/",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Apache License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.apache.tomcat.embed:tomcat-embed-websocket:8.5.11"
+  },
+  {
+    "project": "Woodstox",
+    "description": "Woodstox is a high-performance XML processor that\nimplements Stax (JSR-173) and SAX2 APIs",
+    "version": "4.4.1",
+    "developers": [
+      "Tatu Saloranta"
+    ],
+    "url": "http://woodstox.codehaus.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "The Apache Software License, Version 2.0",
+        "license_url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
+    ],
+    "dependency": "org.codehaus.woodstox:woodstox-core-asl:4.4.1"
+  },
+  {
+    "project": "XML Pull Parsing API",
+    "description": null,
+    "version": "1.1.3.1",
+    "developers": [
+    ],
+    "url": "http://www.xmlpull.org",
+    "year": null,
+    "licenses": [
+      {
+        "license": "Public Domain",
+        "license_url": "http://www.xmlpull.org/v1/download/unpacked/LICENSE.txt"
+      }
+    ],
+    "dependency": "xmlpull:xmlpull:1.1.3.1"
+  },
+  {
+    "project": "XStream Core",
+    "description": null,
+    "version": null,
+    "developers": [
+    ],
+    "url": null,
+    "year": null,
+    "licenses": [
+      {
+        "license": "BSD style",
+        "license_url": "http://x-stream.github.io/license.html"
+      }
+    ],
+    "dependency": "com.thoughtworks.xstream:xstream:1.4.9"
+  }
+]
+
