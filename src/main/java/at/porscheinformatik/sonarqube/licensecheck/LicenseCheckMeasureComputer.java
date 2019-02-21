@@ -1,34 +1,32 @@
 package at.porscheinformatik.sonarqube.licensecheck;
 
-import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckMetrics.DEPENDENCY;
-import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckMetrics.INPUTDEPENDENCY;
-import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckMetrics.INPUTLICENSE;
-import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckMetrics.LICENSE;
-import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.ACTIVATION_KEY;
-import static org.sonar.api.ce.measure.Component.Type.MODULE;
-import static org.sonar.api.ce.measure.Component.Type.PROJECT;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import at.porscheinformatik.sonarqube.licensecheck.model.Dependency;
+import at.porscheinformatik.sonarqube.licensecheck.model.LicenseDefinition;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.ce.measure.Component;
 import org.sonar.api.ce.measure.Measure;
 import org.sonar.api.ce.measure.MeasureComputer;
-import org.sonar.api.config.Settings;
+import org.sonar.api.config.Configuration;
 
-import at.porscheinformatik.sonarqube.licensecheck.license.License;
+import java.util.ArrayList;
+import java.util.List;
+
+import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckMetrics.*;
+import static at.porscheinformatik.sonarqube.licensecheck.LicenseCheckPropertyKeys.ACTIVATION_KEY;
+import static org.sonar.api.ce.measure.Component.Type.MODULE;
+import static org.sonar.api.ce.measure.Component.Type.PROJECT;
+
 
 public class LicenseCheckMeasureComputer implements MeasureComputer
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenseCheckMeasureComputer.class);
-    private final Settings settings;
+    private final Configuration configuration;
 
-    public LicenseCheckMeasureComputer(Settings settings)
+    public LicenseCheckMeasureComputer(Configuration configuration)
     {
-        this.settings = settings;
+        this.configuration = configuration;
     }
 
     @Override
@@ -43,7 +41,7 @@ public class LicenseCheckMeasureComputer implements MeasureComputer
     @Override
     public void compute(MeasureComputerContext context)
     {
-        if (settings.getBoolean(ACTIVATION_KEY))
+        if (configuration.getBoolean(ACTIVATION_KEY).orElse(false))
         {
             Component.Type type = context.getComponent().getType();
             if (type == MODULE || type == PROJECT)
@@ -62,7 +60,7 @@ public class LicenseCheckMeasureComputer implements MeasureComputer
     private static void combineLicenses(MeasureComputerContext context)
     {
         LOGGER.debug("Combining licenses on {}", context.getComponent().getKey());
-        List<License> licensesWithChildren = new ArrayList<>();
+        List<LicenseDefinition> licensesWithChildren = new ArrayList<>();
         Measure measure = context.getMeasure(INPUTLICENSE.getKey());
         addLicenseMeasure(licensesWithChildren, measure);
         for (Measure childMeasure : context.getChildrenMeasures(INPUTLICENSE.getKey()))
@@ -73,15 +71,15 @@ public class LicenseCheckMeasureComputer implements MeasureComputer
         {
             addLicenseMeasure(licensesWithChildren, childMeasure);
         }
-        context.addMeasure(LICENSE.getKey(), License.createString(licensesWithChildren));
+        context.addMeasure(LICENSE.getKey(), LicenseDefinition.createString(licensesWithChildren));
         LOGGER.debug("Stored licenses {}", licensesWithChildren);
     }
 
-    private static void addLicenseMeasure(final List<License> licensesWithChildren, final Measure measure)
+    private static void addLicenseMeasure(final List<LicenseDefinition> licensesWithChildren, final Measure measure)
     {
         if (measure != null && StringUtils.isNotBlank(measure.getStringValue()))
         {
-            licensesWithChildren.addAll(License.fromString(measure.getStringValue()));
+            licensesWithChildren.addAll(LicenseDefinition.fromString(measure.getStringValue()));
         }
     }
 

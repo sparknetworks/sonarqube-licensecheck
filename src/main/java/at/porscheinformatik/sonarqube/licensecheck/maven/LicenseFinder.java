@@ -1,6 +1,6 @@
 package at.porscheinformatik.sonarqube.licensecheck.maven;
 
-import at.porscheinformatik.sonarqube.licensecheck.Dependency;
+import at.porscheinformatik.sonarqube.licensecheck.model.Dependency;
 import org.apache.maven.model.License;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
@@ -30,7 +30,7 @@ public class LicenseFinder {
                 if (model.getParent() != null) {
                     Parent parent = model.getParent();
                     Dependency dependency =
-                        new Dependency(parent.getGroupId() + ":" + parent.getArtifactId(), parent.getVersion(), null);
+                        new Dependency(parent.getGroupId() + ":" + parent.getArtifactId(), parent.getVersion(), (String) null);
                     return getLicenses(DirectoryFinder.getPomPath(dependency,
                         DirectoryFinder.getMavenRepsitoryDir(userSettings, globalSettings)),
                         userSettings, globalSettings);
@@ -40,7 +40,12 @@ public class LicenseFinder {
             }
 
         } catch (Exception e) {
-            LOGGER.warn("Could not parse Maven POM " + filePath, e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Could not parse Maven POM " + filePath, e);
+            } else {
+                LOGGER.warn("Could not parse Maven POM {}: {}", filePath, e.getMessage());
+            }
+
             return Collections.emptyList();
         }
     }

@@ -3,7 +3,7 @@ import Licenses from './dashboard/licenses.vue';
 import Dependencies from './dashboard/dependencies.vue';
 import saveAs from 'file-saverjs';
 import buildExcel from './dashboard/excel-builder';
-
+ 
 window.registerExtension('licensecheck/dashboard', function (options) {
 
   const app = new Vue({
@@ -25,14 +25,6 @@ window.registerExtension('licensecheck/dashboard', function (options) {
             } else if (measure.metric === 'licensecheck.dependency') {
               this.dependencies = JSON.parse(measure.value);
             }
-          });
-          this.dependencies.forEach(dependency => {
-            dependency.status = 'Unknown';
-            this.licenses.forEach(license => {
-              if (dependency.license === license.identifier) {
-                dependency.status = license.status === 'true' ? 'Allowed' : 'Forbidden';
-              }
-            });
           });
         });
     },

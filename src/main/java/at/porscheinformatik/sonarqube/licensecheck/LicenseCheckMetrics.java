@@ -57,6 +57,7 @@ public class LicenseCheckMetrics implements Metrics
     @Override
     public List<Metric> getMetrics()
     {
+
         return Arrays.asList(DEPENDENCY, LICENSE, INPUTDEPENDENCY, INPUTLICENSE);
     }
 }

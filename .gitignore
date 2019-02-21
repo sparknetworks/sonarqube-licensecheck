@@ -1,11 +1,12 @@
 .classpath
 .project
+.factorypath
 .settings/
 target/
 node_modules/
 node/
-package.json
 .idea/
 *.iml
 package-lock.json
 build
+src/test/resources/**/.gradle
