@@ -6,9 +6,13 @@ allprojects {
   task resolvePomDeps {
     doLast {
       configurations.each { conf ->
-        if (conf.name != 'pomResolver'
-          && conf.hasProperty("canBeResolved")
-          && conf.canBeResolved)
+        if (!(conf.name in ['pomResolver',
+                            'apiElements',
+                            'implementation',
+                            'runtimeElements',
+                            'runtimeOnly',
+                            'testImplementation',
+                            'testRuntimeOnly']))
           conf.resolvedConfiguration.resolvedArtifacts.each { artifact ->
             def group = artifact.moduleVersion.id.group
             def name = artifact.moduleVersion.id.name
